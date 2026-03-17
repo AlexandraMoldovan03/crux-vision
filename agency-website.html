@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crux Vision — facem site-uri</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root {
+  --bg: #080810;
+  --violet: #7c3aed;
+  --cyan: #06b6d4;
+  --pink: #ec4899;
+  --white: #ededf5;
+  --muted: #5a5a78;
+  --border: rgba(255,255,255,0.06);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--white); font-family:'Inter',sans-serif; overflow-x:hidden; }
+::selection { background:var(--violet); color:#fff; }
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-thumb { background:var(--violet); }
+
+/* PARTICLES */
+#cvs { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5; }
+
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 6%;
+  background:rgba(8,8,16,0.7); backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+}
+.logo { font-family:'DM Serif Display',serif; font-size:1.25rem; color:var(--white); text-decoration:none; letter-spacing:-.5px; }
+.logo span { color:var(--violet); }
+.nav-r { display:flex; align-items:center; gap:32px; }
+.nav-links { display:flex; gap:24px; list-style:none; }
+.nav-links a { color:var(--muted); text-decoration:none; font-size:.85rem; font-weight:500; transition:.25s; }
+.nav-links a:hover { color:var(--white); }
+.lang-toggle { display:flex; gap:2px; }
+.lb { padding:4px 10px; border-radius:12px; border:none; cursor:pointer; font-size:.75rem; font-weight:600; transition:.25s; background:transparent; color:var(--muted); font-family:'Inter',sans-serif; }
+.lb.on { background:rgba(124,58,237,.2); color:var(--white); }
+.cta-nav { padding:9px 20px; background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.35); border-radius:20px; color:var(--white); font-weight:500; cursor:pointer; font-size:.83rem; transition:.3s; font-family:'Inter',sans-serif; white-space:nowrap; }
+.cta-nav:hover { background:rgba(124,58,237,.3); }
+.hbg { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+.hbg span { width:22px; height:2px; background:var(--white); border-radius:2px; }
+.mob-nav { display:none; position:fixed; top:69px; left:0; right:0; background:rgba(8,8,16,.98); backdrop-filter:blur(20px); padding:24px 6%; flex-direction:column; gap:20px; z-index:99; border-bottom:1px solid var(--border); }
+.mob-nav.open { display:flex; }
+.mob-nav a { color:var(--muted); text-decoration:none; font-size:1.1rem; padding:8px 0; border-bottom:1px solid var(--border); }
+
+/* ─── HERO ─── */
+.hero {
+  position:relative; z-index:1;
+  min-height:100vh; padding:160px 6% 80px;
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;
+}
+.hero-text {}
+.hero-eyebrow { font-size:.78rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:28px; }
+.hero-title {
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(3rem,5.5vw,5.2rem);
+  line-height:1.0;
+  letter-spacing:-.5px;
+  margin-bottom:32px;
+}
+.hero-title em { font-style:italic; color:var(--muted); }
+.hero-title .accent { color:var(--violet); }
+.hero-body { font-size:1rem; color:var(--muted); line-height:1.75; max-width:420px; margin-bottom:44px; }
+.hero-body strong { color:var(--white); font-weight:500; }
+.hero-actions { display:flex; gap:14px; align-items:center; flex-wrap:wrap; }
+.btn-main { padding:13px 28px; background:var(--violet); border:none; border-radius:8px; color:#fff; font-weight:600; cursor:pointer; font-size:.93rem; transition:.25s; text-decoration:none; display:inline-block; font-family:'Inter',sans-serif; }
+.btn-main:hover { background:#6d28d9; transform:translateY(-1px); }
+.btn-ghost { color:var(--muted); font-size:.88rem; text-decoration:none; transition:.2s; display:flex; align-items:center; gap:6px; }
+.btn-ghost:hover { color:var(--white); }
+.arrow { display:inline-block; transition:.2s; }
+.btn-ghost:hover .arrow { transform:translateX(4px); }
+.hero-note { margin-top:52px; padding-top:32px; border-top:1px solid var(--border); display:flex; gap:40px; }
+.hn { display:flex; flex-direction:column; }
+.hn-num { font-size:1.7rem; font-family:'DM Serif Display',serif; color:var(--white); }
+.hn-txt { font-size:.75rem; color:var(--muted); margin-top:2px; }
+/* hero browser */
+.hero-demo { position:relative; }
+.mockup { background:#0d0d1c; border:1px solid rgba(255,255,255,0.08); border-radius:12px; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,.6); animation:fl 7s ease-in-out infinite; }
+.mock-bar { background:#0a0a18; padding:10px 14px; display:flex; align-items:center; gap:7px; }
+.dot { width:9px; height:9px; border-radius:50%; }
+.dr { background:#ff5f57; } .dy { background:#ffbd2e; } .dg { background:#28c840; }
+.mock-url { flex:1; background:rgba(255,255,255,.04); border-radius:3px; padding:4px 10px; font-size:.68rem; color:var(--muted); margin-left:8px; }
+.mock-body { height:300px; overflow:hidden; }
+.mock-scroll { animation:mscroll 11s linear infinite; }
+
+/* ─── ABOUT / INTRO ─── */
+.intro { position:relative; z-index:1; padding:100px 6%; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.intro-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+.intro-title { font-family:'DM Serif Display',serif; font-size:clamp(2rem,3.5vw,3rem); line-height:1.15; margin-bottom:0; }
+.intro-title em { font-style:italic; color:var(--muted); }
+.intro-body { color:var(--muted); line-height:1.8; font-size:.97rem; }
+.intro-body p { margin-bottom:16px; }
+.intro-body strong { color:var(--white); font-weight:500; }
+
+/* ─── SERVICES ─── */
+.services { position:relative; z-index:1; padding:80px 6% 100px; }
+.s-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:48px; }
+.s-list { display:flex; flex-direction:column; }
+.s-item { display:grid; grid-template-columns:40px 1fr auto; gap:24px; align-items:start; padding:28px 0; border-top:1px solid var(--border); transition:.3s; }
+.s-item:last-child { border-bottom:1px solid var(--border); }
+.s-item:hover { border-color:rgba(124,58,237,.3); }
+.s-num { font-size:.78rem; color:var(--muted); font-weight:500; padding-top:4px; }
+.s-content h3 { font-size:1.05rem; font-weight:600; margin-bottom:6px; }
+.s-content p { font-size:.88rem; color:var(--muted); line-height:1.6; max-width:480px; }
+.s-price { font-size:.82rem; color:var(--muted); white-space:nowrap; padding-top:4px; text-align:right; }
+.s-price span { display:block; color:var(--white); font-weight:600; font-size:.9rem; }
+
+/* ─── PORTFOLIO ─── */
+.portfolio { position:relative; z-index:1; padding:80px 6% 100px; }
+.port-top { display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:48px; gap:20px; flex-wrap:wrap; }
+.port-left {}
+.port-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.port-title { font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); line-height:1.1; }
+.port-filters { display:flex; gap:8px; }
+.fbt { padding:7px 16px; background:transparent; border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer; font-size:.8rem; font-weight:500; transition:.25s; font-family:'Inter',sans-serif; }
+.fbt.on, .fbt:hover { border-color:var(--violet); color:var(--white); background:rgba(124,58,237,.1); }
+.pgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.pcard { background:var(--bg); transition:.35s; position:relative; overflow:hidden; }
+.pcard:hover { background:#0d0d1c; }
+.pcard:hover .prev-scroll { animation-play-state:running; }
+.prev-wrap { height:210px; background:#0a0a18; overflow:hidden; position:relative; }
+.prev-browser { width:88%; margin:10px auto 0; background:#0d0d1c; border-radius:7px 7px 0 0; border:1px solid rgba(255,255,255,.06); overflow:hidden; height:188px; }
+.prev-bar { background:#070714; padding:6px 9px; display:flex; align-items:center; gap:4px; }
+.pd { width:6px; height:6px; border-radius:50%; }
+.prev-url { flex:1; background:rgba(255,255,255,.03); border-radius:2px; height:12px; margin-left:5px; }
+.prev-body { height:158px; overflow:hidden; }
+.prev-scroll { width:100%; animation:pscroll 7s linear infinite; }
+.pinfo { padding:20px 22px; }
+.ptag { font-size:.7rem; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.pinfo h3 { font-size:.97rem; font-weight:600; margin-bottom:6px; line-height:1.3; }
+.pinfo p { font-size:.83rem; color:var(--muted); line-height:1.55; }
+.pactions { display:flex; gap:14px; margin-top:14px; align-items:center; }
+.plink { font-size:.78rem; color:var(--muted); text-decoration:none; transition:.2s; display:flex; align-items:center; gap:4px; }
+.plink:hover { color:var(--white); }
+.plink.accent:hover { color:var(--cyan); }
+
+/* DEMO MARKUP — compact, realistic */
+.ds { font-size:10px; background:#07070f; }
+.ds-h { padding:12px; text-align:center; background:linear-gradient(160deg,#130a2a,#0a1525); }
+.ds-h h4 { font-size:12px; font-weight:800; letter-spacing:1px; background:linear-gradient(90deg,#a78bfa,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:2px; }
+.ds-h p { font-size:7px; color:#4a4a6a; }
+.ds-bnr { padding:5px 8px; text-align:center; font-size:7px; font-weight:600; color:#fff; }
+.ds-tags { display:flex; gap:4px; padding:6px 8px; }
+.ds-tag { background:rgba(124,58,237,.12); border:1px solid rgba(124,58,237,.2); border-radius:20px; padding:2px 7px; font-size:6.5px; color:#a78bfa; white-space:nowrap; }
+.ds-g { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:5px 7px; }
+.ds-i { background:#0d0d1c; border-radius:5px; overflow:hidden; }
+.ds-img { height:40px; display:flex; align-items:center; justify-content:center; font-size:16px; }
+.ds-inf { padding:4px 5px; }
+.ds-inf b { display:block; font-size:7.5px; color:#ccc; }
+.ds-inf s { font-size:6.5px; font-weight:700; color:#a78bfa; }
+
+.dr { font-size:10px; background:#080806; }
+.dr-h { padding:11px; text-align:center; background:linear-gradient(160deg,#1a0800,#0a0a00); }
+.dr-h h4 { font-size:12px; font-weight:800; color:#fb923c; margin-bottom:2px; }
+.dr-h p { font-size:7px; color:#4a4a3a; }
+.dr-sec { font-size:7px; font-weight:700; letter-spacing:1px; padding:7px 9px 3px; color:#fb923c; opacity:.7; }
+.dr-row { display:flex; align-items:center; gap:6px; padding:4px 9px; border-bottom:1px solid rgba(255,255,255,.03); }
+.dr-ico { width:28px; height:28px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+.dr-n { font-size:7.5px; color:#ccc; font-weight:600; }
+.dr-d { font-size:6.5px; color:#444; }
+.dr-p { margin-left:auto; font-size:7.5px; font-weight:700; color:#fb923c; flex-shrink:0; }
+.dr-cta { padding:7px; text-align:center; font-size:7px; font-weight:700; color:#fff; }
+
+.dp { font-size:10px; background:#05050e; }
+.dp-nav { display:flex; justify-content:space-between; align-items:center; padding:7px 10px; border-bottom:1px solid rgba(255,255,255,.04); }
+.dp-logo { font-size:9.5px; font-weight:800; background:linear-gradient(90deg,#a78bfa,#22d3ee); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.dp-ls { display:flex; gap:6px; }
+.dp-ls a { font-size:6px; color:#333; }
+.dp-hero { padding:12px; text-align:center; background:linear-gradient(160deg,#05050e,#0a0a1a); }
+.dp-hero h4 { font-size:11px; font-weight:700; color:#e0e0f0; margin-bottom:2px; }
+.dp-hero p { font-size:6.5px; color:#444; }
+.dp-wg { display:grid; grid-template-columns:1fr 1fr; gap:4px; padding:5px 8px; }
+.dp-w { height:36px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:13px; position:relative; overflow:hidden; }
+.dp-wl { position:absolute; bottom:1px; left:0; right:0; text-align:center; font-size:6px; color:#fff; background:rgba(0,0,0,.55); }
+.dp-sk { display:flex; justify-content:center; gap:4px; padding:4px; }
+.dp-s { font-size:6.5px; padding:2px 5px; border-radius:6px; }
+
+/* ─── PROCESS ─── */
+.process { position:relative; z-index:1; padding:80px 6% 100px; }
+.proc-top { margin-bottom:60px; }
+.proc-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+.proc-title { font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,3vw,2.8rem); max-width:400px; line-height:1.15; }
+.proc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:0; }
+.proc-item { padding:32px 28px 32px 0; border-right:1px solid var(--border); }
+.proc-item:last-child { border-right:none; padding-right:0; }
+.proc-item:not(:first-child) { padding-left:28px; }
+.proc-n { font-family:'DM Serif Display',serif; font-size:2.5rem; color:rgba(124,58,237,.25); line-height:1; margin-bottom:16px; }
+.proc-item h3 { font-size:.95rem; font-weight:600; margin-bottom:8px; }
+.proc-item p { font-size:.84rem; color:var(--muted); line-height:1.6; }
+
+/* ─── WORK/RESULTS (instead of testimonials) ─── */
+.results { position:relative; z-index:1; padding:80px 6% 100px; }
+.res-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:48px; }
+.res-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+.res-card { background:var(--bg); padding:36px 32px; transition:.3s; }
+.res-card:hover { background:#0d0d1c; }
+.res-quote { font-size:.95rem; line-height:1.7; color:var(--white); margin-bottom:28px; font-style:italic; }
+.res-meta { display:flex; align-items:center; gap:12px; }
+.res-av { width:38px; height:38px; border-radius:50%; background:rgba(124,58,237,.2); border:1px solid rgba(124,58,237,.3); display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; flex-shrink:0; }
+.res-name { font-size:.85rem; font-weight:600; }
+.res-role { font-size:.78rem; color:var(--muted); margin-top:2px; }
+.res-stat { font-size:.78rem; color:var(--violet); margin-top:4px; font-weight:500; }
+
+/* ─── CONTACT ─── */
+.contact { position:relative; z-index:1; padding:80px 6% 100px; display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start; }
+.c-left {}
+.c-label { font-size:.75rem; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:20px; }
+.c-title { font-family:'DM Serif Display',serif; font-size:clamp(2rem,3.5vw,3.2rem); line-height:1.1; margin-bottom:24px; }
+.c-title em { font-style:italic; color:var(--muted); }
+.c-body { font-size:.95rem; color:var(--muted); line-height:1.75; margin-bottom:36px; }
+.c-links { display:flex; flex-direction:column; gap:12px; }
+.c-link { color:var(--muted); text-decoration:none; font-size:.9rem; display:flex; align-items:center; gap:8px; transition:.2s; }
+.c-link:hover { color:var(--white); }
+.c-link::before { content:'→'; color:var(--violet); font-size:.8rem; }
+.c-form { display:flex; flex-direction:column; gap:14px; }
+.fi { padding:13px 16px; background:rgba(255,255,255,.03); border:1px solid var(--border); border-radius:8px; color:var(--white); font-size:.9rem; outline:none; transition:.25s; font-family:'Inter',sans-serif; width:100%; }
+.fi:focus { border-color:rgba(124,58,237,.5); background:rgba(124,58,237,.04); }
+select.fi { color:var(--muted); background:rgba(8,8,16,.9); }
+textarea.fi { resize:none; }
+.fi-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+
+/* ─── FOOTER ─── */
+footer { position:relative; z-index:1; padding:40px 6% 32px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+.f-logo { font-family:'DM Serif Display',serif; font-size:1.1rem; color:var(--white); }
+.f-logo span { color:var(--violet); }
+.f-links { display:flex; gap:24px; }
+.f-links a { font-size:.82rem; color:var(--muted); text-decoration:none; transition:.2s; }
+.f-links a:hover { color:var(--white); }
+.f-cr { font-size:.78rem; color:var(--muted); }
+
+/* KEYFRAMES */
+@keyframes fl { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes mscroll { 0%{transform:translateY(0)} 100%{transform:translateY(-62%)} }
+@keyframes pscroll { 0%{transform:translateY(0)} 100%{transform:translateY(-58%)} }
+@keyframes up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in { opacity:1; transform:translateY(0); }
+
+/* RESPONSIVE */
+@media(max-width:900px) {
+  .hero { grid-template-columns:1fr; padding-top:120px; }
+  .hero-demo { display:none; }
+  .intro { grid-template-columns:1fr; gap:32px; }
+  .contact { grid-template-columns:1fr; gap:48px; }
+  .proc-grid { grid-template-columns:1fr 1fr; }
+  .res-grid { grid-template-columns:1fr; }
+}
+@media(max-width:640px) {
+  .nav-r .nav-links, .nav-r .cta-nav, .nav-r .lang-toggle { display:none; }
+  .hbg { display:flex; }
+  .proc-grid { grid-template-columns:1fr; }
+  .pgrid { grid-template-columns:1fr; }
+  .port-top { flex-direction:column; align-items:flex-start; }
+  .hero-note { gap:24px; }
+  .s-item { grid-template-columns:30px 1fr; }
+  .s-price { display:none; }
+  footer { flex-direction:column; align-items:flex-start; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="cvs"></canvas>
+
+<nav>
+  <a class="logo" href="#">Crux <span>Vision</span></a>
+  <div class="nav-r">
+    <ul class="nav-links">
+      <li><a href="#services" data-ro="servicii" data-en="services">servicii</a></li>
+      <li><a href="#portfolio" data-ro="proiecte" data-en="projects">proiecte</a></li>
+      <li><a href="#process" data-ro="proces" data-en="process">proces</a></li>
+      <li><a href="#contact" data-ro="contact" data-en="contact">contact</a></li>
+    </ul>
+    <div class="lang-toggle">
+      <button class="lb on" onclick="setLang('ro')">ro</button>
+      <button class="lb" onclick="setLang('en')">en</button>
+    </div>
+    <button class="cta-nav" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" data-ro="hai să vorbim" data-en="let's talk">hai să vorbim</button>
+  </div>
+  <div class="hbg" onclick="toggleMob()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob-nav" id="mobnav">
+  <a href="#services" onclick="toggleMob()" data-ro="servicii" data-en="services">servicii</a>
+  <a href="#portfolio" onclick="toggleMob()" data-ro="proiecte" data-en="projects">proiecte</a>
+  <a href="#process" onclick="toggleMob()" data-ro="proces" data-en="process">proces</a>
+  <a href="#contact" onclick="toggleMob()" data-ro="contact" data-en="contact">contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow" data-ro="web studio · cluj-napoca" data-en="web studio · cluj-napoca">web studio · cluj-napoca</p>
+    <h1 class="hero-title">
+      <span data-ro="facem site-uri<br>care <em>chiar</em><br>funcționează." data-en="we build sites<br>that <em>actually</em><br>work.">facem site-uri<br>care <em>chiar</em><br>funcționează.</span>
+    </h1>
+    <p class="hero-body" data-ro="nu template-uri, nu bullshit. <strong>codul nostru, ideea ta</strong> — de la zero, gândit pentru ce ai tu nevoie." data-en="no templates, no bullshit. <strong>your idea, our code</strong> — built from scratch, for what you actually need.">nu template-uri, nu bullshit. <strong>codul nostru, ideea ta</strong> — de la zero, gândit pentru ce ai tu nevoie.</p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-main" data-ro="vezi ce am făcut" data-en="see what we've done">vezi ce am făcut</a>
+      <a href="#contact" class="btn-ghost" data-ro="sau scrie-ne <span class='arrow'>→</span>" data-en="or write to us <span class='arrow'>→</span>">sau scrie-ne <span class="arrow">→</span></a>
+    </div>
+    <div class="hero-note">
+      <div class="hn"><span class="hn-num" id="cn1">50+</span><span class="hn-txt" data-ro="proiecte livrate" data-en="projects delivered">proiecte livrate</span></div>
+      <div class="hn"><span class="hn-num" id="cn2">4</span><span class="hn-txt" data-ro="ani de când o facem" data-en="years doing this">ani de când o facem</span></div>
+      <div class="hn"><span class="hn-num">24h</span><span class="hn-txt" data-ro="timp de răspuns" data-en="response time">timp de răspuns</span></div>
+    </div>
+  </div>
+  <div class="hero-demo">
+    <div class="mockup">
+      <div class="mock-bar"><div class="dot dr"></div><div class="dot dy"></div><div class="dot dg"></div><div class="mock-url">novastore.ro — live demo</div></div>
+      <div class="mock-body"><div class="mock-scroll">
+        <div class="ds">
+          <div class="ds-h"><h4>NOVA STORE</h4><p>Colecție Primăvară 2026</p></div>
+          <div class="ds-bnr" style="background:linear-gradient(90deg,#7c3aed,#a21caf)">SALE -40% · livrare gratuită</div>
+          <div class="ds-tags"><span class="ds-tag">femei</span><span class="ds-tag">bărbați</span><span class="ds-tag">nou</span></div>
+          <div class="ds-g">
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#160430,#260850)">👗</div><div class="ds-inf"><b>Rochie</b><s>189 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#071525,#0a2530)">👟</div><div class="ds-inf"><b>Sneakers</b><s>299 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#151500,#252500)">🧥</div><div class="ds-inf"><b>Geacă</b><s>459 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#180008,#280010)">👜</div><div class="ds-inf"><b>Geantă</b><s>229 lei</s></div></div>
+          </div>
+          <div class="ds-bnr" style="background:linear-gradient(90deg,#0e7490,#0369a1)">newsletter · -10% prima comandă</div>
+          <div class="ds-g">
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#001508,#002510)">🧴</div><div class="ds-inf"><b>Parfum</b><s>340 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#080818,#121230)">⌚</div><div class="ds-inf"><b>Ceas</b><s>799 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#180020,#200030)">💍</div><div class="ds-inf"><b>Bijuterie</b><s>520 lei</s></div></div>
+            <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#001520,#002535)">👒</div><div class="ds-inf"><b>Pălărie</b><s>145 lei</s></div></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section class="intro reveal" id="about">
+  <div>
+    <div class="intro-label" data-ro="cine suntem" data-en="who we are">cine suntem</div>
+    <h2 class="intro-title" data-ro="un studio mic.<br><em>muncim serios.</em>" data-en="a small studio.<br><em>we work hard.</em>">un studio mic.<br><em>muncim serios.</em></h2>
+  </div>
+  <div class="intro-body">
+    <p data-ro="nu avem 50 de angajați și nu ne propunem să avem. suntem o echipă mică, fiecare proiect îl luăm personal." data-en="we don't have 50 employees and we don't want to. we're a small team, every project is personal to us.">nu avem 50 de angajați și nu ne propunem să avem. suntem o echipă mică, fiecare proiect îl luăm personal.</p>
+    <p data-ro="facem site-uri de la zero — magazine online, restaurante, portofolii, landing pages. <strong>nu instalăm WordPress și nu-ți vindem un template.</strong>" data-en="we build websites from scratch — online stores, restaurants, portfolios, landing pages. <strong>we don't install WordPress and sell you a template.</strong>">facem site-uri de la zero — magazine online, restaurante, portofolii, landing pages. <strong>nu instalăm WordPress și nu-ți vindem un template.</strong></p>
+    <p data-ro="dacă ai un buget real și vrei ceva care să și funcționeze — suntem oamenii tăi." data-en="if you have a real budget and want something that actually works — we're your people.">dacă ai un buget real și vrei ceva care să și funcționeze — suntem oamenii tăi.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services reveal" id="services">
+  <div class="s-label" data-ro="ce facem" data-en="what we do">ce facem</div>
+  <div class="s-list">
+    <div class="s-item">
+      <span class="s-num">01</span>
+      <div class="s-content">
+        <h3 data-ro="magazine online" data-en="online stores">magazine online</h3>
+        <p data-ro="coș, plăți, stocuri, admin. tot ce ai nevoie ca să vinzi — fără să depinzi de o platformă care ia comision din fiecare comandă." data-en="cart, payments, inventory, admin. everything you need to sell — without depending on a platform that takes a cut from every order.">coș, plăți, stocuri, admin. tot ce ai nevoie ca să vinzi — fără să depinzi de o platformă care ia comision din fiecare comandă.</p>
+      </div>
+      <div class="s-price" data-ro="de la<br><span>1500 €</span>" data-en="from<br><span>€1500</span>">de la<br><span>1500 €</span></div>
+    </div>
+    <div class="s-item">
+      <span class="s-num">02</span>
+      <div class="s-content">
+        <h3 data-ro="restaurante & servicii locale" data-en="restaurants & local services">restaurante & servicii locale</h3>
+        <p data-ro="meniu digital, rezervări, galerie, contact. oamenii caută online înainte să vină la tine — să aibă ce vedea." data-en="digital menu, reservations, gallery, contact. people search online before they come to you — give them something to see.">meniu digital, rezervări, galerie, contact. oamenii caută online înainte să vină la tine — să aibă ce vedea.</p>
+      </div>
+      <div class="s-price" data-ro="de la<br><span>800 €</span>" data-en="from<br><span>€800</span>">de la<br><span>800 €</span></div>
+    </div>
+    <div class="s-item">
+      <span class="s-num">03</span>
+      <div class="s-content">
+        <h3 data-ro="landing pages & campanii" data-en="landing pages & campaigns">landing pages & campanii</h3>
+        <p data-ro="o pagină clară, rapidă, cu un singur scop. dacă rulezi reclame și trimiți oamenii pe pagina principală, pierzi bani." data-en="one clear, fast page with a single purpose. if you run ads and send people to your homepage, you're losing money.">o pagină clară, rapidă, cu un singur scop. dacă rulezi reclame și trimiți oamenii pe pagina principală, pierzi bani.</p>
+      </div>
+      <div class="s-price" data-ro="de la<br><span>500 €</span>" data-en="from<br><span>€500</span>">de la<br><span>500 €</span></div>
+    </div>
+    <div class="s-item">
+      <span class="s-num">04</span>
+      <div class="s-content">
+        <h3 data-ro="portofolii & prezentări corporate" data-en="portfolios & corporate sites">portofolii & prezentări corporate</h3>
+        <p data-ro="site-ul tău spune ceva despre tine înainte să apuci să deschizi gura. facem să spună lucrurile potrivite." data-en="your site says something about you before you even open your mouth. we make sure it says the right things.">site-ul tău spune ceva despre tine înainte să apuci să deschizi gura. facem să spună lucrurile potrivite.</p>
+      </div>
+      <div class="s-price" data-ro="de la<br><span>900 €</span>" data-en="from<br><span>€900</span>">de la<br><span>900 €</span></div>
+    </div>
+    <div class="s-item">
+      <span class="s-num">05</span>
+      <div class="s-content">
+        <h3 data-ro="site-ul tău actual merge greu?" data-en="is your current site slow?">site-ul tău actual merge greu?</h3>
+        <p data-ro="îl audităm, vedem ce e stricat și îl facem mai rapid. SEO, hosting, cod — luăm tot la rând." data-en="we audit it, find what's broken and make it faster. SEO, hosting, code — we go through everything.">îl audităm, vedem ce e stricat și îl facem mai rapid. SEO, hosting, cod — luăm tot la rând.</p>
+      </div>
+      <div class="s-price" data-ro="audit<br><span>gratuit</span>" data-en="audit<br><span>free</span>">audit<br><span>gratuit</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio reveal" id="portfolio">
+  <div class="port-top">
+    <div>
+      <div class="port-label" data-ro="ce am construit" data-en="what we've built">ce am construit</div>
+      <h2 class="port-title" data-ro="proiecte recente" data-en="recent projects">proiecte recente</h2>
+    </div>
+    <div class="port-filters">
+      <button class="fbt on" data-cat="all" data-ro="toate" data-en="all">toate</button>
+      <button class="fbt" data-cat="shop" data-ro="magazine" data-en="stores">magazine</button>
+      <button class="fbt" data-cat="resto" data-ro="horeca" data-en="horeca">horeca</button>
+      <button class="fbt" data-cat="port" data-ro="portofolii" data-en="portfolios">portofolii</button>
+    </div>
+  </div>
+  <div class="pgrid" id="pgrid">
+
+    <!-- Card 1 -->
+    <div class="pcard" data-c="shop">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:8s">
+          <div class="ds">
+            <div class="ds-h"><h4>NOVA STORE</h4><p>Fashion & Style</p></div>
+            <div class="ds-bnr" style="background:linear-gradient(90deg,#7c3aed,#a21caf)">SALE -40% · livrare gratuită</div>
+            <div class="ds-tags"><span class="ds-tag">femei</span><span class="ds-tag">bărbați</span><span class="ds-tag">nou</span></div>
+            <div class="ds-g">
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#160430,#260850)">👗</div><div class="ds-inf"><b>Rochie</b><s>189 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#071525,#0a2530)">👟</div><div class="ds-inf"><b>Sneakers</b><s>299 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#151500,#252500)">🧥</div><div class="ds-inf"><b>Geacă</b><s>459 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#180008,#280010)">👜</div><div class="ds-inf"><b>Geantă</b><s>229 lei</s></div></div>
+            </div>
+            <div class="ds-bnr" style="background:linear-gradient(90deg,#0e7490,#0369a1)">newsletter · -10% prima comandă</div>
+            <div class="ds-g">
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#001508,#002510)">🧴</div><div class="ds-inf"><b>Parfum</b><s>340 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#080818,#121230)">⌚</div><div class="ds-inf"><b>Ceas</b><s>799 lei</s></div></div>
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">e-commerce</div>
+        <h3>Nova Store — fashion</h3>
+        <p data-ro="200+ produse, filtre, checkout rapid. +120% comenzi față de site-ul vechi." data-en="200+ products, filters, fast checkout. +120% orders vs the old site.">200+ produse, filtre, checkout rapid. +120% comenzi față de site-ul vechi.</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="pcard" data-c="resto">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:9s">
+          <div class="dr">
+            <div class="dr-h"><h4>BELLA VITA</h4><p>ristorante italiano · cluj</p></div>
+            <div style="padding:5px;background:rgba(251,146,60,.07);text-align:center;font-size:6.5px;color:#fb923c">rezervare online disponibilă</div>
+            <div class="dr-sec">PIZZA</div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#2a1000,#401800)">🍕</div><div><div class="dr-n">Margherita</div><div class="dr-d">roșii, mozzarella, busuioc</div></div><span class="dr-p">28 lei</span></div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#180a00,#281400)">🥩</div><div><div class="dr-n">Quattro Stagioni</div><div class="dr-d">șuncă, ciuperci, măsline</div></div><span class="dr-p">38 lei</span></div>
+            <div class="dr-sec">PASTE</div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#181200,#282000)">🍝</div><div><div class="dr-n">Carbonara</div><div class="dr-d">pancetta, ou, parmigiano</div></div><span class="dr-p">36 lei</span></div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#001800,#002800)">🌿</div><div><div class="dr-n">Pesto Genovese</div><div class="dr-d">busuioc proaspăt, pin</div></div><span class="dr-p">32 lei</span></div>
+            <div class="dr-sec">DESERTURI</div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#280a18,#401020)">🍮</div><div><div class="dr-n">Tiramisu</div><div class="dr-d">rețetă tradițională</div></div><span class="dr-p">22 lei</span></div>
+            <div class="dr-cta" style="background:linear-gradient(90deg,#c2410c,#ea580c)">rezervă o masă</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">restaurant</div>
+        <h3>Bella Vita — italian bistro</h3>
+        <p data-ro="meniu digital, rezervări online. înainte luau rezervări doar pe telefon." data-en="digital menu, online reservations. before this they only took reservations by phone.">meniu digital, rezervări online. înainte luau rezervări doar pe telefon.</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="pcard" data-c="port">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:7s">
+          <div class="dp">
+            <div class="dp-nav"><span class="dp-logo">ALEX.DEV</span><div class="dp-ls"><a>about</a><a>work</a><a>contact</a></div></div>
+            <div class="dp-hero"><h4>Full-Stack Developer</h4><p>building things for the web since 2019</p></div>
+            <div class="dp-wg">
+              <div class="dp-w" style="background:linear-gradient(135deg,#160428,#0a1830)">🛍️<span class="dp-wl">e-commerce</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#082808,#181808)">🍕<span class="dp-wl">restaurant</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#080828,#200828)">📱<span class="dp-wl">mobile app</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#281800,#180828)">💼<span class="dp-wl">corporate</span></div>
+            </div>
+            <div style="padding:4px 8px;text-align:center"><div style="background:linear-gradient(90deg,#7c3aed,#0891b2);border-radius:3px;padding:5px;font-size:6.5px;color:#fff;font-weight:600">available for freelance work →</div></div>
+            <div class="dp-sk"><span class="dp-s" style="background:rgba(124,58,237,.18);color:#a78bfa">React</span><span class="dp-s" style="background:rgba(8,145,178,.18);color:#22d3ee">Next.js</span><span class="dp-s" style="background:rgba(236,72,153,.15);color:#f472b6">Node.js</span></div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">portofoliu</div>
+        <h3>Alex.dev — developer portfolio</h3>
+        <p data-ro="3 contracte noi în prima lună după lansare. spun ei, nu noi." data-en="3 new contracts in the first month after launch. their words, not ours.">3 contracte noi în prima lună după lansare. spun ei, nu noi.</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="pcard" data-c="shop">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:10s">
+          <div class="ds">
+            <div class="ds-h" style="background:linear-gradient(160deg,#1a0015,#0a0a18)"><h4 style="background:linear-gradient(90deg,#f472b6,#e879f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent">GLOW UP</h4><p>beauty & skincare</p></div>
+            <div class="ds-bnr" style="background:linear-gradient(90deg,#9d174d,#be185d)">seturi complete cu -25%</div>
+            <div class="ds-tags"><span class="ds-tag" style="color:#f472b6;border-color:rgba(244,114,182,.2)">față</span><span class="ds-tag" style="color:#f472b6;border-color:rgba(244,114,182,.2)">corp</span><span class="ds-tag" style="color:#f472b6;border-color:rgba(244,114,182,.2)">seturi</span></div>
+            <div class="ds-g">
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#280a18,#401020)">🧴</div><div class="ds-inf"><b>Serum Vit C</b><s style="color:#f472b6">145 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#180a2a,#281840)">✨</div><div class="ds-inf"><b>Mască Hidra</b><s style="color:#f472b6">89 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#081818,#103030)">🌿</div><div class="ds-inf"><b>Ulei Argan</b><s style="color:#f472b6">120 lei</s></div></div>
+              <div class="ds-i"><div class="ds-img" style="background:linear-gradient(135deg,#181200,#283000)">💆</div><div class="ds-inf"><b>Set Complet</b><s style="color:#f472b6">350 lei</s></div></div>
+            </div>
+            <div class="ds-bnr" style="background:linear-gradient(90deg,#7c3aed,#be185d)">abonează-te · livrare gratuită</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">e-commerce</div>
+        <h3>Glow Up — beauty store</h3>
+        <p data-ro="quiz pe tip de ten, filtru produse, abonament. rata de return visitors 60%+" data-en="skin type quiz, product filter, subscription. 60%+ return visitor rate.">quiz pe tip de ten, filtru produse, abonament. rata de return visitors 60%+</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="pcard" data-c="resto">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:8s">
+          <div class="dr" style="background:#070705">
+            <div class="dr-h" style="background:linear-gradient(160deg,#0a0400,#150900)"><h4 style="color:#d97706">BEANCRAFT</h4><p>specialty coffee · timișoara</p></div>
+            <div style="padding:4px;background:rgba(217,119,6,.07);text-align:center;font-size:6.5px;color:#d97706">L–V 7:00–21:00 · weekend 8:00–22:00</div>
+            <div class="dr-sec" style="color:#d97706">cafea</div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#180a00,#251200)">☕</div><div><div class="dr-n">Espresso</div><div class="dr-d">single origin Ethiopia</div></div><span class="dr-p" style="color:#d97706">12 lei</span></div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#180f00,#261800)">🥛</div><div><div class="dr-n">Flat White</div><div class="dr-d">double shot + oat milk</div></div><span class="dr-p" style="color:#d97706">22 lei</span></div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#001210,#001e1a)">🧊</div><div><div class="dr-n">Cold Brew</div><div class="dr-d">18h infusion</div></div><span class="dr-p" style="color:#d97706">24 lei</span></div>
+            <div class="dr-sec" style="color:#d97706">dulciuri</div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#180a00,#281400)">🥐</div><div><div class="dr-n">Croissant</div><div class="dr-d">copt zilnic</div></div><span class="dr-p" style="color:#d97706">16 lei</span></div>
+            <div class="dr-row"><div class="dr-ico" style="background:linear-gradient(135deg,#180404,#280808)">🍰</div><div><div class="dr-n">Cheesecake</div><div class="dr-d">fructe de pădure</div></div><span class="dr-p" style="color:#d97706">28 lei</span></div>
+            <div class="dr-cta" style="background:linear-gradient(90deg,#92400e,#b45309)">comandă sau ridică de la noi</div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">cafenea</div>
+        <h3>BeanCraft — coffee shop</h3>
+        <p data-ro="meniu digital cu orar, comandă online, loyalty. clientul a renunțat la app-ul extern." data-en="digital menu with hours, online order, loyalty. the client dropped their third-party app.">meniu digital cu orar, comandă online, loyalty. clientul a renunțat la app-ul extern.</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+    <!-- Card 6 -->
+    <div class="pcard" data-c="port">
+      <div class="prev-wrap"><div class="prev-browser">
+        <div class="prev-bar"><div class="pd" style="background:#ff5f57"></div><div class="pd" style="background:#ffbd2e"></div><div class="pd" style="background:#28c840"></div><div class="prev-url"></div></div>
+        <div class="prev-body"><div class="prev-scroll" style="animation-duration:9s">
+          <div class="dp">
+            <div class="dp-nav" style="background:#080810"><span style="background:linear-gradient(90deg,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:9px;font-weight:800">ARCHVIZ</span><div class="dp-ls"><a>proiecte</a><a>servicii</a><a>contact</a></div></div>
+            <div class="dp-hero" style="background:linear-gradient(160deg,#03030c,#080a18)"><h4 style="background:linear-gradient(90deg,#22d3ee,#3b82f6);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Studio Arhitectură</h4><p>design interior · cluj · 2018–2026</p></div>
+            <div class="dp-wg">
+              <div class="dp-w" style="background:linear-gradient(135deg,#080a20,#101830)">🏢<span class="dp-wl">office</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#082008,#102810)">🏠<span class="dp-wl">rezidențial</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#200808,#301010)">🏨<span class="dp-wl">hotel</span></div>
+              <div class="dp-w" style="background:linear-gradient(135deg,#181200,#281e00)">🏫<span class="dp-wl">public</span></div>
+            </div>
+            <div style="padding:4px 8px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;text-align:center">
+              <div style="background:rgba(34,211,238,.08);border-radius:3px;padding:4px"><b style="font-size:8.5px;color:#22d3ee">120+</b><br><span style="font-size:6px;color:#444">proiecte</span></div>
+              <div style="background:rgba(59,130,246,.08);border-radius:3px;padding:4px"><b style="font-size:8.5px;color:#60a5fa">8 ani</b><br><span style="font-size:6px;color:#444">experiență</span></div>
+              <div style="background:rgba(34,211,238,.08);border-radius:3px;padding:4px"><b style="font-size:8.5px;color:#22d3ee">5 ★</b><br><span style="font-size:6px;color:#444">recenzii</span></div>
+            </div>
+          </div>
+        </div></div>
+      </div></div>
+      <div class="pinfo">
+        <div class="ptag">corporate</div>
+        <h3>ArchViz — studio arhitectură</h3>
+        <p data-ro="galerie proiecte, statistici, formular de colaborare. clienți noi din search organic." data-en="project gallery, stats, collaboration form. new clients from organic search.">galerie proiecte, statistici, formular de colaborare. clienți noi din search organic.</p>
+        <div class="pactions"><a href="#" class="plink">↗ <span data-ro="deschide" data-en="open">deschide</span></a><a href="#contact" class="plink accent">+ <span data-ro="vreau asta" data-en="i want this">vreau asta</span></a></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process reveal" id="process">
+  <div class="proc-top">
+    <div class="proc-label" data-ro="cum lucrăm" data-en="how it works">cum lucrăm</div>
+    <h2 class="proc-title" data-ro="simplu. fără surprize." data-en="simple. no surprises.">simplu. fără surprize.</h2>
+  </div>
+  <div class="proc-grid">
+    <div class="proc-item"><div class="proc-n">01</div><h3 data-ro="discuție" data-en="discovery">discuție</h3><p data-ro="ne spui ce vrei, ce buget ai, când trebuie. dacă nu ne potrivim, îți spunem direct — fără să pierdem vremea nimănui." data-en="tell us what you want, your budget, your timeline. if we're not the right fit, we'll tell you straight — no wasting anyone's time.">ne spui ce vrei, ce buget ai, când trebuie. dacă nu ne potrivim, îți spunem direct.</p></div>
+    <div class="proc-item"><div class="proc-n">02</div><h3 data-ro="design" data-en="design">design</h3><p data-ro="facem un prototip vizual. te uiți, ne zici ce nu-ți place, schimbăm. fără limite de revizii." data-en="we make a visual prototype. you look, tell us what you don't like, we change it. no revision limits.">facem un prototip. te uiți, ne zici ce nu-ți place, schimbăm. fără limite de revizii.</p></div>
+    <div class="proc-item"><div class="proc-n">03</div><h3 data-ro="dezvoltare" data-en="development">dezvoltare</h3><p data-ro="codăm. repede și curat. optimizat pentru mobil, rapid pe orice conexiune, SEO inclus de la bun început." data-en="we code. fast and clean. optimized for mobile, fast on any connection, SEO included from the start.">codăm. repede și curat. mobil, viteză, SEO — incluse de la bun început.</p></div>
+    <div class="proc-item"><div class="proc-n">04</div><h3 data-ro="lansare" data-en="launch">lansare</h3><p data-ro="testăm tot, lansăm, îți predăm controlul. 30 de zile suport gratuit după lansare — pentru orice." data-en="we test everything, launch, hand over control. 30 days free support after launch — for anything.">testăm tot, lansăm, îți predăm controlul. 30 de zile suport gratuit.</p></div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results reveal" id="results">
+  <div class="res-label" data-ro="ce spun clienții" data-en="client feedback">ce spun clienții</div>
+  <div class="res-grid">
+    <div class="res-card">
+      <p class="res-quote" data-ro="&ldquo;am îndoit comenzile în prima lună. nu mai scot bani pe reclame la fel de mult — oamenii găsesc singuri site-ul.&rdquo;" data-en="&ldquo;doubled my orders in the first month. i don't spend as much on ads anymore — people find the site on their own.&rdquo;">&ldquo;am îndoit comenzile în prima lună. nu mai scot bani pe reclame la fel de mult — oamenii găsesc singuri site-ul.&rdquo;</p>
+      <div class="res-meta"><div class="res-av">AM</div><div><div class="res-name">Andrei M.</div><div class="res-role" data-ro="proprietar, magazin online" data-en="owner, online store">proprietar, magazin online</div><div class="res-stat" data-ro="+105% comenzi · 3 luni" data-en="+105% orders · 3 months">+105% comenzi · 3 luni</div></div></div>
+    </div>
+    <div class="res-card">
+      <p class="res-quote" data-ro="&ldquo;înainte luam rezervări pe telefon și uitam. acum vin singure în calendar. am angajat un om în plus cu banii câștigați.&rdquo;" data-en="&ldquo;before i took reservations by phone and forgot them. now they come straight to the calendar. i hired a new person with the money saved.&rdquo;">&ldquo;înainte luam rezervări pe telefon și uitam. acum vin singure în calendar. am angajat un om în plus cu banii câștigați.&rdquo;</p>
+      <div class="res-meta"><div class="res-av">CP</div><div><div class="res-name">Cristian P.</div><div class="res-role" data-ro="manager, restaurant" data-en="manager, restaurant">manager, restaurant</div><div class="res-stat" data-ro="-80% timp pe telefon · rezervări +3x" data-en="-80% time on phone · reservations +3x">-80% timp pe telefon · rezervări +3x</div></div></div>
+    </div>
+    <div class="res-card">
+      <p class="res-quote" data-ro="&ldquo;știam că am nevoie de un site. nu știam că poate face atâta diferență. clienții vin mai pregătiți, nu mai pierd timp explicând de la zero.&rdquo;" data-en="&ldquo;i knew i needed a website. i didn't know it could make this much of a difference. clients come more prepared, i don't waste time explaining from scratch.&rdquo;">&ldquo;știam că am nevoie de un site. nu știam că poate face atâta diferență. clienții vin mai pregătiți.&rdquo;</p>
+      <div class="res-meta"><div class="res-av">RI</div><div><div class="res-name">Raluca I.</div><div class="res-role" data-ro="owner, salon frumusețe" data-en="owner, beauty salon">owner, salon frumusețe</div><div class="res-stat" data-ro="clienți noi · 100% din organic" data-en="new clients · 100% organic">clienți noi · 100% din organic</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact reveal" id="contact">
+  <div class="c-left">
+    <div class="c-label" data-ro="hai să vorbim" data-en="let's talk">hai să vorbim</div>
+    <h2 class="c-title" data-ro="ai un proiect<br>în cap?" data-en="got a project<br><em>in mind?</em>">ai un proiect<br><em>în cap?</em></h2>
+    <p class="c-body" data-ro="spune-ne despre el. nu te sunam să-ți vindem nimic — vrem să vedem dacă ne potrivim și cum te putem ajuta." data-en="tell us about it. we won't call to sell you anything — we want to see if we're a fit and how we can help.">spune-ne despre el. nu te sunăm să-ți vindem nimic — vrem să vedem dacă ne potrivim și cum te putem ajuta.</p>
+    <div class="c-links">
+      <a href="mailto:hello@cruxvision.ro" class="c-link">hello@cruxvision.ro</a>
+      <a href="tel:+40700000000" class="c-link">+40 700 000 000</a>
+      <a href="#" class="c-link" data-ro="cluj-napoca, românia" data-en="cluj-napoca, romania">cluj-napoca, românia</a>
+    </div>
+  </div>
+  <form class="c-form" id="cform">
+    <div class="fi-row">
+      <input type="text" class="fi" placeholder="Numele tău" data-placeholder-ro="Numele tău" data-placeholder-en="Your name">
+      <input type="email" class="fi" placeholder="Email" data-placeholder-ro="Email" data-placeholder-en="Email">
+    </div>
+    <select class="fi">
+      <option value="" data-ro="ce tip de site vrei?" data-en="what type of site?">ce tip de site vrei?</option>
+      <option value="shop" data-ro="magazin online" data-en="online store">magazin online</option>
+      <option value="landing" data-ro="landing page" data-en="landing page">landing page</option>
+      <option value="resto" data-ro="restaurant / cafenea" data-en="restaurant / café">restaurant / cafenea</option>
+      <option value="port" data-ro="portofoliu / corporate" data-en="portfolio / corporate">portofoliu / corporate</option>
+      <option value="other" data-ro="altceva" data-en="something else">altceva</option>
+    </select>
+    <textarea class="fi" rows="4" placeholder="spune-ne mai multe — buget, deadline, ce ai deja..." data-placeholder-ro="spune-ne mai multe — buget, deadline, ce ai deja..." data-placeholder-en="tell us more — budget, deadline, what you have so far..."></textarea>
+    <button type="submit" class="btn-main" id="sbtn" style="align-self:flex-start" data-ro="trimite" data-en="send">trimite</button>
+    <p style="font-size:.78rem;color:var(--muted)" data-ro="răspundem în 24h. nu spam, promis." data-en="we reply within 24h. no spam, promised.">răspundem în 24h. nu spam, promis.</p>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="f-logo">Crux <span>Vision</span></span>
+  <div class="f-links">
+    <a href="#services" data-ro="servicii" data-en="services">servicii</a>
+    <a href="#portfolio" data-ro="proiecte" data-en="projects">proiecte</a>
+    <a href="mailto:hello@cruxvision.ro">hello@cruxvision.ro</a>
+  </div>
+  <span class="f-cr" data-ro="© 2026 crux vision" data-en="© 2026 crux vision">© 2026 crux vision</span>
+</footer>
+
+<script>
+// PARTICLES
+const cvs=document.getElementById('cvs'),cx=cvs.getContext('2d');
+function rsz(){cvs.width=innerWidth;cvs.height=innerHeight;}rsz();addEventListener('resize',rsz);
+const pts=Array.from({length:55},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.2+.4,a:Math.random()*.2+.05,c:Math.random()>.5?'124,58,237':'6,182,212'}));
+(function tick(){
+  cx.clearRect(0,0,cvs.width,cvs.height);
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=cvs.width;if(p.x>cvs.width)p.x=0;if(p.y<0)p.y=cvs.height;if(p.y>cvs.height)p.y=0;cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);cx.fillStyle=`rgba(${p.c},${p.a})`;cx.fill();});
+  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<100){cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.strokeStyle=`rgba(124,58,237,${.05*(1-d/100)})`;cx.lineWidth=.4;cx.stroke();}}
+  requestAnimationFrame(tick);
+})();
+
+// REVEAL
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:.07});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// NAV scroll effect
+addEventListener('scroll',()=>{document.querySelector('nav').style.background=scrollY>30?'rgba(8,8,16,.95)':'rgba(8,8,16,.7)';});
+
+// MOBILE
+function toggleMob(){document.getElementById('mobnav').classList.toggle('open');}
+
+// FILTERS
+document.querySelectorAll('.fbt').forEach(b=>{
+  b.addEventListener('click',function(){
+    document.querySelectorAll('.fbt').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+    const cat=this.dataset.cat;
+    document.querySelectorAll('.pcard').forEach(c=>{
+      const show=cat==='all'||c.dataset.c===cat;
+      c.style.display=show?'block':'none';
+    });
+  });
+});
+
+// LANGUAGE
+let lang='ro';
+function setLang(l){
+  lang=l;
+  document.querySelectorAll('.lb').forEach(b=>b.classList.toggle('on',b.textContent===l));
+  document.querySelectorAll('[data-ro]').forEach(el=>{
+    const v=el.getAttribute('data-'+l);if(!v)return;
+    if(el.tagName==='INPUT'||el.tagName==='TEXTAREA')el.placeholder=el.getAttribute('data-placeholder-'+l)||v;
+    else if(el.tagName==='OPTION')el.textContent=v;
+    else el.innerHTML=v;
+  });
+}
+
+// FORM
+document.getElementById('cform').addEventListener('submit',function(e){
+  e.preventDefault();
+  const btn=document.getElementById('sbtn');
+  btn.textContent=lang==='ro'?'trimis. te contactăm în curând.':'sent. we\'ll be in touch.';
+  btn.style.background='#059669';
+  setTimeout(()=>{btn.textContent=lang==='ro'?'trimite':'send';btn.style.background='';},4000);
+});
+
+// COUNTER
+const sobs=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){
+    let n=0;const iv=setInterval(()=>{n=Math.min(n+1,50);document.getElementById('cn1').textContent=n+'+';if(n>=50)clearInterval(iv);},20);
+    sobs.unobserve(e.target);
+  }
+}),{threshold:.8});
+const hn=document.querySelector('.hero-note');if(hn)sobs.observe(hn);
+</script>
+</body>
+</html>
