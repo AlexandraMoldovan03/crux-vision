@@ -9,22 +9,6 @@ const AboutSection = () => {
 
   return (
     <section id="about" className="relative section-padding overflow-hidden">
-      {/* Floating decorations */}
-      <motion.div
-        className="absolute top-20 left-10 w-32 h-32 border border-primary/10 rounded-2xl"
-        animate={{ rotate: [12, 18, 12], y: [0, -10, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 right-16 w-24 h-24 border border-secondary/10 rounded-full"
-        animate={{ y: [0, -14, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
-      <motion.div
-        className="absolute top-1/2 right-1/4 w-16 h-16 bg-primary/5 rounded-lg"
-        animate={{ rotate: [45, 60, 45], y: [0, -8, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-      />
 
       <div ref={ref} className="max-w-4xl mx-auto text-center relative z-10">
         <motion.span
