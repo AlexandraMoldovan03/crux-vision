@@ -1,6 +1,6 @@
 import { motion, useInView, animate } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface CounterProps {
   target: number;
@@ -29,9 +29,44 @@ const Counter = ({ target, suffix = "", prefix = "", inView }: CounterProps) => 
   );
 };
 
-const StatsSection = () => {
+const StatCard = ({ stat, i }: { stat: { value: number; prefix: string; suffix: string; label: string; custom?: string }; i: number }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-60px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50, scale: 0.9 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+      transition={{ type: "spring", stiffness: 80, damping: 18, delay: i * 0.12 }}
+      className="text-center"
+    >
+      {stat.custom ? (
+        <motion.span
+          className="font-display text-5xl md:text-6xl font-black gradient-text"
+          animate={isInView ? { scale: [0.5, 1.1, 1] } : {}}
+          transition={{ duration: 0.6, delay: i * 0.12 + 0.1 }}
+        >
+          {stat.custom}
+        </motion.span>
+      ) : (
+        <Counter target={stat.value} prefix={stat.prefix} suffix={stat.suffix} inView={isInView} />
+      )}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={isInView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5, delay: i * 0.12 + 0.3 }}
+        className="text-muted-foreground mt-3 text-sm md:text-base font-medium"
+      >
+        {stat.label}
+      </motion.p>
+    </motion.div>
+  );
+};
+
+const StatsSection = () => {
+  const headerRef = useRef(null);
+  const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
   const { t } = useLanguage();
 
   const stats = [
@@ -47,24 +82,31 @@ const StatsSection = () => {
         <div className="w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px]" />
       </div>
 
-      <div ref={ref} className="max-w-6xl mx-auto relative z-10">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8 }} className="text-center mb-16">
-          <span className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block">{t.statsLabel}</span>
-          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold">
-            {t.statsTitle} <span className="gradient-text">{t.statsTitleAccent}</span>
-          </h2>
-        </motion.div>
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div ref={headerRef}>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={headerInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.7, type: "spring", stiffness: 80 }}
+            className="text-center mb-16"
+          >
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={headerInView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.6 }}
+              className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block"
+            >
+              {t.statsLabel}
+            </motion.span>
+            <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold">
+              {t.statsTitle} <span className="gradient-text">{t.statsTitleAccent}</span>
+            </h2>
+          </motion.div>
+        </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {stats.map((stat, i) => (
-            <motion.div key={i} initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: i * 0.15 }} className="text-center">
-              {stat.custom ? (
-                <span className="font-display text-5xl md:text-6xl font-black gradient-text">{stat.custom}</span>
-              ) : (
-                <Counter target={stat.value} prefix={stat.prefix} suffix={stat.suffix} inView={isInView} />
-              )}
-              <p className="text-muted-foreground mt-3 text-sm md:text-base font-medium">{stat.label}</p>
-            </motion.div>
+            <StatCard key={i} stat={stat} i={i} />
           ))}
         </div>
       </div>

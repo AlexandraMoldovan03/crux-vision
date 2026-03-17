@@ -23,7 +23,7 @@ const Navbar = () => {
       setScrolled(window.scrollY > 50);
       if (mobileOpen) setMobileOpen(false);
     };
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [mobileOpen]);
 

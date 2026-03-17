@@ -25,6 +25,8 @@ const HeroSection = () => {
     <img
       src={sharkLogo}
       alt="Crux Vision"
+      fetchPriority="high"
+      decoding="async"
       className="relative w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain drop-shadow-[0_0_40px_rgba(59,130,246,0.4)]"
     />
   </div>

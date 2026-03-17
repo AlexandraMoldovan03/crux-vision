@@ -1,25 +1,64 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { useLanguage } from "../contexts/LanguageContext"
+import { useLanguage } from "../contexts/LanguageContext";
+
 const AboutSection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
   const { t } = useLanguage();
 
   return (
     <section id="about" className="relative section-padding overflow-hidden">
-      <div className="absolute top-20 left-10 w-32 h-32 border border-primary/10 rounded-2xl rotate-12 animate-float" />
-      <div className="absolute bottom-20 right-16 w-24 h-24 border border-secondary/10 rounded-full animate-float" style={{ animationDelay: "2s" }} />
-      <div className="absolute top-1/2 right-1/4 w-16 h-16 bg-primary/5 rounded-lg rotate-45 animate-float" style={{ animationDelay: "4s" }} />
+      {/* Floating decorations */}
+      <motion.div
+        className="absolute top-20 left-10 w-32 h-32 border border-primary/10 rounded-2xl"
+        animate={{ rotate: [12, 18, 12], y: [0, -10, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-20 right-16 w-24 h-24 border border-secondary/10 rounded-full"
+        animate={{ y: [0, -14, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
+      <motion.div
+        className="absolute top-1/2 right-1/4 w-16 h-16 bg-primary/5 rounded-lg"
+        animate={{ rotate: [45, 60, 45], y: [0, -8, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+      />
 
       <div ref={ref} className="max-w-4xl mx-auto text-center relative z-10">
-        <motion.span initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ duration: 0.6 }} className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block">
+        <motion.span
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, type: "spring", stiffness: 100 }}
+          className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block"
+        >
           {t.aboutLabel}
         </motion.span>
-        <motion.h2 initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.1 }} className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-8">
-          {t.aboutTitle} <span className="gradient-text">{t.aboutTitleAccent}</span>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+          transition={{ duration: 0.7, type: "spring", stiffness: 80, delay: 0.1 }}
+          className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-8"
+        >
+          {t.aboutTitle}{" "}
+          <motion.span
+            className="gradient-text inline-block"
+            initial={{ opacity: 0, x: 20 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, type: "spring", stiffness: 80, delay: 0.2 }}
+          >
+            {t.aboutTitleAccent}
+          </motion.span>
         </motion.h2>
-        <motion.p initial={{ opacity: 0, y: 20 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.8, delay: 0.3 }} className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-3xl mx-auto">
+
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, type: "spring", stiffness: 70, delay: 0.3 }}
+          className="text-muted-foreground text-lg md:text-xl leading-relaxed max-w-3xl mx-auto"
+        >
           {t.aboutDesc}
         </motion.p>
       </div>
