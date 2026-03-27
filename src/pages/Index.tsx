@@ -6,8 +6,10 @@ import HeroSection from "@/components/HeroSection";
 const AboutSection    = lazy(() => import("@/components/AboutSection"));
 const ServicesSection = lazy(() => import("@/components/ServicesSection"));
 const ProjectsSection = lazy(() => import("@/components/ProjectsSection"));
-const StatsSection    = lazy(() => import("@/components/StatsSection"));
-const ProcessSection  = lazy(() => import("@/components/ProcessSection"));
+const StatsSection       = lazy(() => import("@/components/StatsSection"));
+const ClientsSection     = lazy(() => import("@/components/ClientsSection"));
+const SocialProofSection = lazy(() => import("@/components/SocialProofSection"));
+const ProcessSection     = lazy(() => import("@/components/ProcessSection"));
 const CtaSection      = lazy(() => import("@/components/CtaSection"));
 const FooterSection   = lazy(() => import("@/components/FooterSection"));
 
@@ -30,6 +32,12 @@ const Index = () => {
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <StatsSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <ClientsSection />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <SocialProofSection />
       </Suspense>
       <Suspense fallback={<SectionFallback />}>
         <ProcessSection />

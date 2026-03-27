@@ -1,134 +1,411 @@
-import { motion, useInView } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
+import { Phone, Mail, Clock, ChevronDown, Check } from "lucide-react";
 import sharkLogo from "@/assets/shark-logo.png";
 import { useLanguage } from "../contexts/LanguageContext";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
+// ─── Multi-Select Dropdown ────────────────────────────────────────────────────
+interface MultiSelectProps {
+  options: { value: string; label: string; featured?: boolean }[];
+  selected: string[];
+  onChange: (val: string[]) => void;
+  placeholder: string;
+  selectedLabel: string;
+  disabled?: boolean;
+}
+
+const MultiSelect = ({
+  options,
+  selected,
+  onChange,
+  placeholder,
+  selectedLabel,
+  disabled,
+}: MultiSelectProps) => {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Close on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const toggle = (val: string) => {
+    onChange(
+      selected.includes(val) ? selected.filter((s) => s !== val) : [...selected, val]
+    );
+  };
+
+  const triggerLabel =
+    selected.length === 0
+      ? placeholder
+      : selected.length === 1
+      ? options.find((o) => o.value === selected[0])?.label ?? placeholder
+      : `${selected.length} ${selectedLabel}`;
+
+  return (
+    <div ref={ref} className="relative">
+      {/* Trigger */}
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen((p) => !p)}
+        className={`w-full glass-card px-5 py-3.5 rounded-xl text-left flex items-center justify-between gap-3 border border-glass-border transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed ${
+          open ? "ring-1 ring-primary/50 border-primary/30" : "hover:border-white/20"
+        } ${selected.length > 0 ? "text-foreground" : "text-muted-foreground"}`}
+      >
+        <span className="text-sm truncate">{triggerLabel}</span>
+        <ChevronDown
+          size={16}
+          className={`flex-shrink-0 text-muted-foreground transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {/* Dropdown panel */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -6, scale: 0.98 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
+            className="absolute top-full mt-2 left-0 right-0 z-50 glass-card border border-glass-border rounded-2xl overflow-hidden shadow-2xl shadow-black/50"
+          >
+            {options.map((opt) => {
+              const checked = selected.includes(opt.value);
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  onClick={() => toggle(opt.value)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left transition-colors duration-150 ${
+                    opt.featured
+                      ? "bg-primary/10 hover:bg-primary/20 border-b border-primary/20"
+                      : "hover:bg-white/5"
+                  } ${checked ? "text-foreground" : "text-muted-foreground"}`}
+                >
+                  {/* Checkbox */}
+                  <span
+                    className={`w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 border transition-all duration-150 ${
+                      checked
+                        ? "bg-primary border-primary"
+                        : opt.featured
+                        ? "border-primary/50 bg-primary/10"
+                        : "border-white/20 bg-white/5"
+                    }`}
+                  >
+                    {checked && <Check size={12} className="text-white" strokeWidth={3} />}
+                  </span>
+
+                  <span className={`flex-1 ${opt.featured ? "font-semibold text-foreground" : ""}`}>
+                    {opt.label}
+                  </span>
+
+                  {opt.featured && (
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-primary/20 text-primary border border-primary/30 flex-shrink-0">
+                      FREE
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// ─── Contact Info Item ────────────────────────────────────────────────────────
+const ContactItem = ({
+  icon: Icon,
+  label,
+  value,
+  href,
+}: {
+  icon: React.ElementType;
+  label: string;
+  value: string;
+  href?: string;
+}) => (
+  <div className="flex items-start gap-3">
+    <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 bg-primary/10 border border-primary/20">
+      <Icon size={16} className="text-primary" />
+    </div>
+    <div>
+      <p className="text-xs text-muted-foreground mb-0.5">{label}</p>
+      {href ? (
+        <a href={href} className="text-sm font-medium text-foreground hover:text-primary transition-colors">
+          {value}
+        </a>
+      ) : (
+        <p className="text-sm font-medium text-foreground">{value}</p>
+      )}
+    </div>
+  </div>
+);
+
+// ─── Main Footer ──────────────────────────────────────────────────────────────
 const FooterSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [status, setStatus] = useState<FormStatus>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
   const { t } = useLanguage();
+
+  const [name, setName]           = useState("");
+  const [company, setCompany]     = useState("");
+  const [email, setEmail]         = useState("");
+  const [phone, setPhone]         = useState("");
+  const [services, setServices]   = useState<string[]>([]);
+  const [note, setNote]           = useState("");
+  const [status, setStatus]       = useState<FormStatus>("idle");
+  const [errorMsg, setErrorMsg]   = useState("");
 
   const FORMSPREE_ID = "xvzwwwlz";
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  // Service options — recomputed from translations
+  const serviceOptions = [
+    { value: "consultation", label: t.svcOpt0, featured: true },
+    { value: "social-media",  label: t.svcOpt1 },
+    { value: "marketing",     label: t.svcOpt2 },
+    { value: "content",       label: t.svcOpt3 },
+    { value: "design",        label: t.svcOpt4 },
+    { value: "web",           label: t.svcOpt5 },
+    { value: "pr-events",     label: t.svcOpt6 },
+    { value: "pricing",       label: t.svcOpt7 },
+    { value: "not-sure",      label: t.svcOpt8 },
+  ];
 
-  if (!name.trim() || !email.trim() || !message.trim()) return;
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim() || !email.trim()) return;
 
-  setStatus("loading");
-  setErrorMsg("");
+    setStatus("loading");
+    setErrorMsg("");
 
-  try {
-    const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({ name, email, message }),
-    });
+    const selectedLabels = services.map(
+      (v) => serviceOptions.find((o) => o.value === v)?.label ?? v
+    );
 
-    const data = await res.json();
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name,
+          company: company || "—",
+          email,
+          phone: phone || "—",
+          services: selectedLabels.join(", ") || "—",
+          note: note || "—",
+        }),
+      });
 
-    if (res.ok) {
-      setStatus("success");
-      setName("");
-      setEmail("");
-      setMessage("");
-    } else {
-      setErrorMsg(data?.errors?.[0]?.message || t.errorDesc);
+      const data = await res.json();
+      if (res.ok) {
+        setStatus("success");
+        setName(""); setCompany(""); setEmail("");
+        setPhone(""); setServices([]); setNote("");
+      } else {
+        setErrorMsg(data?.errors?.[0]?.message || t.errorDesc);
+        setStatus("error");
+      }
+    } catch {
+      setErrorMsg(t.errorDesc);
       setStatus("error");
     }
-  } catch {
-    setErrorMsg(t.errorDesc);
-    setStatus("error");
-  }
-};
+  }, [name, company, email, phone, services, note, t, serviceOptions]);
 
   const inputClass =
-    "w-full glass-card px-5 py-3.5 rounded-xl text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all duration-300 bg-transparent border border-glass-border disabled:opacity-50 disabled:cursor-not-allowed";
+    "w-full glass-card px-5 py-3.5 rounded-xl text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/50 border border-glass-border transition-all duration-300 bg-transparent disabled:opacity-50 disabled:cursor-not-allowed";
+
+  const isLoading  = status === "loading";
+  const canSubmit  = name.trim() && email.trim() && !isLoading;
 
   return (
-    <footer id="contact" className="relative section-padding border-t border-border">
-      <div ref={ref} className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+    <footer id="contact" className="relative section-padding border-t border-border overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/4 rounded-full blur-[160px]" />
+      </div>
 
-          {/* ── Brand side ── */}
+      <div ref={ref} className="max-w-7xl mx-auto relative z-10">
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, type: "spring", stiffness: 80 }}
+          className="text-center mb-14"
+        >
+          <span className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-5 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/8">
+            {t.contactLabel}
+          </span>
+          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-4">
+            {t.contactTitle}{" "}
+            <span className="gradient-text">{t.contactTitleAccent}</span>
+          </h2>
+          <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto">
+            {t.contactSubtitle}
+          </p>
+        </motion.div>
+
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
+
+          {/* ── Left: Contact info ── */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="lg:col-span-2 flex flex-col gap-8"
           >
-            <div className="flex items-center gap-3 mb-6">
-              <img src={sharkLogo} alt="Crux Vision" className="w-10 h-10" />
-              <span className="font-display font-bold text-xl text-foreground">
-                CRUX <span className="gradient-text">VISION</span>
+            {/* Brand */}
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <img src={sharkLogo} alt="Crux Vision" className="w-10 h-10" />
+                <span className="font-display font-bold text-xl text-foreground">
+                  CRUX <span className="gradient-text">VISION</span>
+                </span>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
+                {t.footerDesc}
+              </p>
+            </div>
+
+            {/* Contact details */}
+            <div className="flex flex-col gap-4">
+              <ContactItem
+                icon={Phone}
+                label={t.contactPhone}
+                value="+40 700 000 000"
+                href="tel:+40700000000"
+              />
+              <ContactItem
+                icon={Mail}
+                label={t.contactEmail}
+                value="contact@cruxvision.ro"
+                href="mailto:contact@cruxvision.ro"
+              />
+              <ContactItem
+                icon={Clock}
+                label="Program"
+                value={t.contactAvailability}
+              />
+            </div>
+
+            {/* Response time badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-green-500/20 bg-green-500/8 self-start">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
+              <span className="text-xs font-medium text-green-400">
+                {t.successDesc.split(".")[0]}
               </span>
             </div>
-            <p className="text-muted-foreground max-w-md mb-8 leading-relaxed">{t.footerDesc}</p>
           </motion.div>
 
-          {/* ── Form side ── */}
+          {/* ── Right: Form ── */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-3"
           >
-            {/* SUCCESS state */}
             {status === "success" ? (
-              <div className="glass-card p-10 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[320px]">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-2"
-                  style={{ background: "linear-gradient(135deg, hsl(var(--primary)/0.15), hsl(var(--secondary)/0.15))", border: "1px solid hsl(var(--primary)/0.3)" }}>
+              /* Success state */
+              <div className="glass-card p-10 rounded-2xl flex flex-col items-center justify-center text-center gap-4 min-h-[400px]">
+                <div
+                  className="w-16 h-16 rounded-full flex items-center justify-center text-3xl mb-2"
+                  style={{
+                    background: "linear-gradient(135deg, hsl(var(--primary)/0.15), hsl(var(--secondary)/0.15))",
+                    border: "1px solid hsl(var(--primary)/0.3)",
+                  }}
+                >
                   ✓
                 </div>
                 <h3 className="font-display text-2xl font-bold text-foreground">{t.successTitle}</h3>
                 <p className="text-muted-foreground max-w-xs">{t.successDesc}</p>
                 <button
                   onClick={() => setStatus("idle")}
-                  className="mt-4 text-sm font-medium text-primary hover:text-foreground transition-colors duration-300 underline underline-offset-4"
+                  className="mt-4 text-sm font-medium text-primary hover:text-foreground transition-colors underline underline-offset-4"
                 >
                   {t.sendAnother}
                 </button>
               </div>
             ) : (
-              /* FORM state (idle / loading / error) */
-              <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-                <input
-                  type="text"
-                  placeholder={t.yourName}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  disabled={status === "loading"}
-                  required
-                  className={inputClass}
-                />
-                <input
-                  type="email"
-                  placeholder={t.yourEmail}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  disabled={status === "loading"}
-                  required
-                  className={inputClass}
-                />
+              /* Form */
+              <form className="glass-card p-7 rounded-2xl flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
+                {/* Row 1: Name + Company */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    placeholder={t.formName}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={isLoading}
+                    required
+                    className={inputClass}
+                  />
+                  <input
+                    type="text"
+                    placeholder={t.formCompany}
+                    value={company}
+                    onChange={(e) => setCompany(e.target.value)}
+                    disabled={isLoading}
+                    className={inputClass}
+                  />
+                </div>
+
+                {/* Row 2: Email + Phone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <input
+                    type="email"
+                    placeholder={t.formEmail}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading}
+                    required
+                    className={inputClass}
+                  />
+                  <input
+                    type="tel"
+                    placeholder={t.formPhone}
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    disabled={isLoading}
+                    className={inputClass}
+                  />
+                </div>
+
+                {/* Row 3: Multi-select */}
+                <div>
+                  <label className="block text-xs font-medium text-muted-foreground mb-2 ml-1">
+                    {t.formServices}
+                  </label>
+                  <MultiSelect
+                    options={serviceOptions}
+                    selected={services}
+                    onChange={setServices}
+                    placeholder={t.formServicesPlaceholder}
+                    selectedLabel={t.formServicesSelected}
+                    disabled={isLoading}
+                  />
+                </div>
+
+                {/* Row 4: Optional note */}
                 <textarea
-                  placeholder={t.tellUs}
-                  rows={4}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  disabled={status === "loading"}
-                  required
+                  placeholder={t.formNotePlaceholder}
+                  rows={3}
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  disabled={isLoading}
                   className={`${inputClass} resize-none`}
                 />
 
-                {/* Error message */}
+                {/* Error */}
                 {status === "error" && (
                   <div className="flex items-start gap-3 text-sm px-4 py-3 rounded-xl bg-destructive/10 border border-destructive/30 text-destructive">
                     <span className="mt-0.5">⚠</span>
@@ -136,13 +413,14 @@ const handleSubmit = async (e: React.FormEvent) => {
                   </div>
                 )}
 
+                {/* Submit */}
                 <button
                   type="submit"
-                  disabled={status === "loading" || !name.trim() || !email.trim() || !message.trim()}
-                  className="w-full py-4 rounded-xl font-display font-semibold text-primary-foreground transition-all duration-500 hover-glow disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:shadow-none flex items-center justify-center gap-2"
+                  disabled={!canSubmit}
+                  className="w-full py-4 rounded-xl font-display font-semibold text-primary-foreground transition-all duration-500 hover-glow disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-1"
                   style={{ background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))" }}
                 >
-                  {status === "loading" ? (
+                  {isLoading ? (
                     <>
                       <svg className="animate-spin w-4 h-4" viewBox="0 0 24 24" fill="none">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -157,9 +435,9 @@ const handleSubmit = async (e: React.FormEvent) => {
               </form>
             )}
           </motion.div>
-
         </div>
 
+        {/* Copyright */}
         <div className="mt-16 pt-8 border-t border-border text-center">
           <p className="text-muted-foreground text-sm">{t.copyright}</p>
         </div>
