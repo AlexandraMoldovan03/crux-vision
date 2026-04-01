@@ -1,6 +1,7 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Phone, Mail, Clock, ChevronDown, Check } from "lucide-react";
+import { Link } from "react-router-dom";
 import sharkLogo from "@/assets/shark-logo.png";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -437,8 +438,30 @@ const FooterSection = () => {
           </motion.div>
         </div>
 
-        {/* Copyright */}
+        {/* Copyright + Legal links */}
         <div className="mt-16 pt-8 border-t border-border text-center">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mb-3">
+            <Link
+              to="/politica-confidentialitate"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+            >
+              Politică de Confidențialitate
+            </Link>
+            <span className="text-muted-foreground/30 text-xs hidden sm:inline">|</span>
+            <Link
+              to="/termeni-si-conditii"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+            >
+              Termeni și Condiții
+            </Link>
+            <span className="text-muted-foreground/30 text-xs hidden sm:inline">|</span>
+            <Link
+              to="/politica-cookie"
+              className="text-xs text-muted-foreground hover:text-primary transition-colors duration-200"
+            >
+              Politică Cookie
+            </Link>
+          </div>
           <p className="text-muted-foreground text-sm">{t.copyright}</p>
         </div>
       </div>

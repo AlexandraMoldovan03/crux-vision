@@ -9,7 +9,7 @@ import img2 from "../assets/5b47be2e-5cd0-4421-abe1-5ec07d9eb325 2.jpg";
 import img3 from "../assets/986e3055-cd16-46d6-8ca3-d8a1889fc6a9 2.jpg";
 import img4 from "../assets/978c2bc3-5a38-4898-a2e4-2c862ea52f95 2.jpg";
 import img5 from "../assets/c693892f-6afd-453b-b023-e3bbe9836d59 2.jpg";
-import img6 from "../assets/81621ad2-88a1-475e-8a5e-1bfcbb2768152.jpg";
+//import img6 from "../assets/81621ad2-88a1-475e-8a5e-1bfcbb2768152.jpg";
 import img7 from "../assets/3bf91374-494d-4279-a2f7-929442f07758 2.jpg";
 import img8 from "../assets/8a0a2a6a-7d3d-4de3-835a-7fa9c0b62bbf 2.jpg";
 import img9 from "../assets/818e11e9-ddbf-485f-810a-5a384e51ae1c 2.jpg";
@@ -17,8 +17,8 @@ import img10 from "../assets/b83cafa2-91d0-44fe-a5da-4c72940f9ec2 2.jpg";
 import img11 from "../assets/baebc606-f5a7-49df-8e28-6121e76ed64b 2.jpg";
 import img12 from "../assets/f948431c-168f-49d6-be72-0f6ccc61173b 2.jpg";
 
-const allImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12];
-const row1 = [img1, img2, img3, img4, img5, img6];
+const allImages = [img1, img2, img3, img4, img5, img7, img8, img9, img10, img11, img12];
+const row1 = [img1, img2, img3, img4, img5];
 const row2 = [img7, img8, img9, img10, img11, img12];
 
 // ─── Animated Counter ────────────────────────────────────────────────────────
