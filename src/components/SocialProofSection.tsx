@@ -9,7 +9,6 @@ import img2 from "../assets/5b47be2e-5cd0-4421-abe1-5ec07d9eb325 2.jpg";
 import img3 from "../assets/986e3055-cd16-46d6-8ca3-d8a1889fc6a9 2.jpg";
 import img4 from "../assets/978c2bc3-5a38-4898-a2e4-2c862ea52f95 2.jpg";
 import img5 from "../assets/c693892f-6afd-453b-b023-e3bbe9836d59 2.jpg";
-//import img6 from "../assets/81621ad2-88a1-475e-8a5e-1bfcbb2768152.jpg";
 import img7 from "../assets/3bf91374-494d-4279-a2f7-929442f07758 2.jpg";
 import img8 from "../assets/8a0a2a6a-7d3d-4de3-835a-7fa9c0b62bbf 2.jpg";
 import img9 from "../assets/818e11e9-ddbf-485f-810a-5a384e51ae1c 2.jpg";
