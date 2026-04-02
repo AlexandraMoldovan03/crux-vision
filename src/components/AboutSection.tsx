@@ -56,7 +56,6 @@ const AboutSection = () => {
         >
           {/* Label */}
           <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground/50 mb-4">
-            CV =
           </p>
 
           {/* Pills row */}
