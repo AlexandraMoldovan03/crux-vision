@@ -22,22 +22,22 @@ const ProcessStep = ({ step, i }: { step: Step; i: number }) => {
       transition={{ type: "spring", stiffness: 70, damping: 18, delay: 0.1 }}
       className={`relative flex items-start gap-6 mb-12 last:mb-0 ${isEven ? "md:flex-row" : "md:flex-row-reverse"}`}
     >
-      {/* Timeline dot */}
+      {/* Timeline dot — hidden on mobile, visible on md+ */}
       <motion.div
         initial={{ scale: 0 }}
         animate={isInView ? { scale: 1 } : {}}
         transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
-        className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full border-2 border-primary bg-background -translate-x-1/2 mt-1 z-10 glow-blue"
+        className="hidden md:block absolute md:left-1/2 w-4 h-4 rounded-full border-2 border-primary bg-background -translate-x-1/2 mt-1 z-10 glow-blue"
       />
 
-      <div className={`ml-16 md:ml-0 md:w-[calc(50%-2rem)] ${isEven ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
+      <div className={`w-full md:ml-0 md:w-[calc(50%-2rem)] ${isEven ? "md:pr-12 md:text-right" : "md:pl-12"}`}>
         <motion.div
           whileHover={{ scale: 1.02, y: -4 }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: "spring", stiffness: 300 }}
           className={`glass-card p-6 hover-glow transition-colors duration-500 ${isEven ? "md:ml-auto" : ""}`}
         >
-          <div className={`flex items-center gap-3 mb-3 ${isEven ? "md:flex-row-reverse" : ""}`}>
+          <div className={`flex items-center justify-center md:justify-start gap-3 mb-3 ${isEven ? "md:flex-row-reverse" : ""}`}>
             <motion.div
               initial={{ rotate: -20, opacity: 0 }}
               animate={isInView ? { rotate: 0, opacity: 1 } : {}}
@@ -49,7 +49,7 @@ const ProcessStep = ({ step, i }: { step: Step; i: number }) => {
             </motion.div>
             <h3 className="font-display text-lg font-semibold text-foreground">{step.title}</h3>
           </div>
-          <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
+          <p className="text-muted-foreground text-sm leading-relaxed text-center md:text-left">{step.description}</p>
         </motion.div>
       </div>
     </motion.div>
@@ -103,11 +103,11 @@ const ProcessSection = () => {
         </div>
 
         <div ref={lineRef} className="relative">
-          {/* Static background line */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-border/30 md:-translate-x-px" />
-          {/* Animated fill line */}
+          {/* Static background line — hidden on mobile */}
+          <div className="hidden md:block absolute md:left-1/2 top-0 bottom-0 w-px bg-border/30 md:-translate-x-px" />
+          {/* Animated fill line — hidden on mobile */}
           <motion.div
-            className="absolute left-8 md:left-1/2 top-0 w-px md:-translate-x-px origin-top"
+            className="hidden md:block absolute md:left-1/2 top-0 w-px md:-translate-x-px origin-top"
             style={{
               height: lineHeight,
               background: "linear-gradient(to bottom, hsl(var(--primary)), hsl(var(--secondary)), transparent)",

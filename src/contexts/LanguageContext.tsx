@@ -24,6 +24,8 @@ const translations = {
     aboutTitle: "Who We",
     aboutTitleAccent: "Are",
     aboutDesc: "We're a full-service digital agency that builds and grows brands from the ground up. High-performance websites, custom apps, social media management, paid campaigns, video content, branding, PR and events — everything your brand needs to show up, stand out and dominate online. One team. Total coverage.",
+    cvPillars: "Creativity,Technology,Data,Strategy",
+    cvTagline: "to build and grow your brand — sustainably and measurably.",
 
     // Services
     servicesLabel: "What We Do",
@@ -179,6 +181,8 @@ const translations = {
     aboutTitle: "Cine",
     aboutTitleAccent: "Suntem",
     aboutDesc: "Depășim barierele unei agenții clasice. Nu facem lucruri izolate, ci construim sisteme: de la site-uri și aplicații, la campanii și evenimente. Totul este conectat pentru a genera impact, nu doar prezență.",
+    cvPillars: "Creativitate,Tehnologie,Date,Strategie",
+    cvTagline: "pentru a construi și crește brandul în mod sustenabil și măsurabil.",
 
     servicesLabel: "Ce Oferim",
     servicesTitle: "Agenție",

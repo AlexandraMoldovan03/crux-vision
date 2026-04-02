@@ -32,6 +32,19 @@ const HeroSection = () => {
   </div>
 </motion.div>
 
+        {/* Shark motto */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="flex justify-center mb-5"
+        >
+          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs md:text-sm text-muted-foreground/80 italic tracking-wide font-medium">
+            <span className="text-primary not-italic font-bold text-base leading-none">🦈</span>
+            Be a shark in the internet ocean.
+          </span>
+        </motion.div>
+
         <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6">
           {t.heroLine1}
           <br />

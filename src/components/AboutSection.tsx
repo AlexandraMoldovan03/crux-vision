@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
+import { Plus } from "lucide-react";
 
 const AboutSection = () => {
   const ref = useRef(null);
@@ -45,6 +46,48 @@ const AboutSection = () => {
         >
           {t.aboutDesc}
         </motion.p>
+
+        {/* CV Formula */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, type: "spring", stiffness: 70, delay: 0.5 }}
+          className="mt-10"
+        >
+          {/* Label */}
+          <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground/50 mb-4">
+            CV =
+          </p>
+
+          {/* Pills row */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {t.cvPillars.split(",").map((pillar, i, arr) => (
+              <div key={pillar} className="flex items-center gap-3">
+                <motion.span
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                  transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}
+                  className="px-4 py-2 rounded-full border border-primary/25 bg-primary/8 text-sm font-semibold text-primary"
+                >
+                  {pillar}
+                </motion.span>
+                {i < arr.length - 1 && (
+                  <Plus size={14} className="text-primary/40 flex-shrink-0" />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Tagline */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.85 }}
+            className="mt-4 text-xs text-muted-foreground/50 italic"
+          >
+            {t.cvTagline}
+          </motion.p>
+        </motion.div>
       </div>
     </section>
   );
