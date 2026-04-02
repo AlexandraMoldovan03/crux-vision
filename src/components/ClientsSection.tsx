@@ -5,7 +5,7 @@ import { useLanguage } from "../contexts/LanguageContext";
 // ─── Brand data ───────────────────────────────────────────────────────────────
 const brands = [
   { name: "BSides Transilvania",  category: "Event" },
-  { name: "Dacia",                category: "Shop" },
+  { name: "Dacia",                category: "Car Brand" },
   { name: "Crucs BarberShop",     category: "Grooming" },
   { name: "MobilFox",             category: "Tech" },
   { name: "Karlsburg Residence",  category: "Real Estate" },
