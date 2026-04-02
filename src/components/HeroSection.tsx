@@ -40,7 +40,7 @@ const HeroSection = () => {
           className="flex justify-center mb-5"
         >
           <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs md:text-sm text-muted-foreground/80 italic tracking-wide font-medium">
-            <span className="text-primary not-italic font-bold text-base leading-none">🦈</span>
+            <span className="text-primary not-italic font-bold text-base leading-none"></span>
             Be a shark in the internet ocean.
           </span>
         </motion.div>
