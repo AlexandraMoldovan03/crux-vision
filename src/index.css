@@ -150,80 +150,59 @@
   }
 
   .marquee-viewport {
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-
-  @media (min-width: 768px) {
-    .section-padding {
-      padding: 8rem 3rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .section-padding {
-      padding: 8rem 6rem;
-    }
-  }
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+.marquee-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  padding-right: 0.75rem; /* must equal gap so groups join seamlessly */
 }
 
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes wave {
-  0% { transform: translateX(0) translateZ(0) scaleY(1); }
-  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
-  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 4s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-gradient-shift {
-  background-size: 200% 200%;
-  animation: gradient-shift 6s ease infinite;
+.marquee-item {
+  flex-shrink: 0;
 }
 
 @keyframes marquee-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50%));
+  }
 }
 
 @keyframes marquee-right {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  from {
+    transform: translateX(calc(-50%));
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 .animate-marquee-left {
-  animation: marquee-left 35s linear infinite;
+  animation: marquee-left 40s linear infinite;
   will-change: transform;
 }
 
 .animate-marquee-right {
-  animation: marquee-right 35s linear infinite;
+  animation: marquee-right 40s linear infinite;
   will-change: transform;
 }
 
 .animate-marquee-left:hover,
 .animate-marquee-right:hover {
   animation-play-state: paused;
+}
 }

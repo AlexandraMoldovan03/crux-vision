@@ -177,46 +177,48 @@ const MarqueeRow = ({
   onImageClick: (src: string) => void;
 }) => {
   const [paused, setPaused] = useState(false);
-  // Triplicate for seamless loop on any screen size
-  const items = [...images, ...images, ...images];
+
+  // Repeat images enough times so each group is always wider than any viewport
+  const filledImages = [...images, ...images, ...images, ...images, ...images];
 
   return (
     <div
-      className="overflow-hidden w-full"
+      className="marquee-viewport"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
       <div
-        className={`flex gap-4 w-max ${reverse ? "animate-marquee-right" : "animate-marquee-left"}`}
+        className={`marquee-track ${reverse ? "animate-marquee-right" : "animate-marquee-left"}`}
         style={{
           animationDuration: `${speed}s`,
           animationPlayState: paused ? "paused" : "running",
-          willChange: "transform",
         }}
       >
-        {items.map((src, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ scale: 1.05, y: -6 }}
-            transition={{ type: "spring", stiffness: 300, damping: 22 }}
-            className="flex-shrink-0 cursor-zoom-in group relative"
-            onClick={() => onImageClick(src)}
-          >
-            <img
-              src={src}
-              alt={`Social proof ${(i % images.length) + 1}`}
-              className="h-[17rem] w-auto rounded-2xl border border-white/10 shadow-xl shadow-black/50 object-cover"
-              draggable={false}
-            />
-            {/* Hover overlay */}
-            <div className="absolute inset-0 rounded-2xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ring-2 ring-primary/40" />
-          </motion.div>
+        {[0, 1].map((groupIndex) => (
+          <div className="marquee-group" key={groupIndex}>
+            {filledImages.map((src, i) => (
+              <motion.div
+                key={`${groupIndex}-${i}`}
+                whileHover={{ scale: 1.03, y: -4 }}
+                transition={{ type: "spring", stiffness: 300, damping: 24 }}
+                className="marquee-item cursor-zoom-in group relative"
+                onClick={() => onImageClick(src)}
+              >
+                <img
+                  src={src}
+                  alt={`Social proof ${i + 1}`}
+                  className="h-[15rem] sm:h-[17rem] w-auto rounded-2xl border border-white/10 shadow-xl shadow-black/50 object-cover"
+                  draggable={false}
+                />
+                <div className="absolute inset-0 rounded-2xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ring-2 ring-primary/40" />
+              </motion.div>
+            ))}
+          </div>
         ))}
       </div>
     </div>
   );
 };
-
 // ─── Main Section ─────────────────────────────────────────────────────────────
 const SocialProofSection = () => {
   const headerRef = useRef(null);
@@ -264,11 +266,11 @@ const SocialProofSection = () => {
       {/* Header */}
       <div className="max-w-6xl mx-auto px-6 relative z-10 mb-14" ref={headerRef}>
         <motion.div
-          initial={{ opacity: 0, y: 36 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, type: "spring", stiffness: 80 }}
-          className="text-center"
-        >
+  initial={{ opacity: 0 }}
+  animate={headerInView ? { opacity: 1 } : {}}
+  transition={{ duration: 0.9, delay: 0.4 }}
+  className="flex flex-col gap-5 relative z-10 w-screen left-1/2 -translate-x-1/2"
+>
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             animate={headerInView ? { opacity: 1, scale: 1 } : {}}
@@ -319,14 +321,16 @@ const SocialProofSection = () => {
         className="flex flex-col gap-5 relative z-10"
       >
         {[
-          { images: row1, reverse: false, speed: 38 },
-          { images: row2, reverse: true,  speed: 46 },
+          { images: row1, reverse: false, speed: 70 },
+          { images: row2, reverse: true,  speed: 85 },
         ].map(({ images, reverse, speed }, rowIdx) => (
           <div key={rowIdx} className="relative">
             {/* Left fade */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            {/* <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" /> */}
             {/* Right fade */}
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            {/* <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" /> */}
+            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
             <MarqueeRow
               images={images}
               reverse={reverse}
