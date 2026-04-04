@@ -76,7 +76,8 @@ const MultiSelect = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute top-full mt-2 left-0 right-0 z-50 glass-card border border-glass-border rounded-2xl overflow-hidden shadow-2xl shadow-black/50"
+            className="absolute top-full mt-2 left-0 right-0 z-50 rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border border-white/10"
+            style={{ background: "hsl(225 25% 10%)" }}
           >
             {options.map((opt) => {
               const checked = selected.includes(opt.value);
@@ -87,9 +88,9 @@ const MultiSelect = ({
                   onClick={() => toggle(opt.value)}
                   className={`w-full flex items-center gap-3 px-4 py-3 text-sm text-left transition-colors duration-150 ${
                     opt.featured
-                      ? "bg-primary/10 hover:bg-primary/20 border-b border-primary/20"
-                      : "hover:bg-white/5"
-                  } ${checked ? "text-foreground" : "text-muted-foreground"}`}
+                      ? "bg-primary/15 hover:bg-primary/25 border-b border-primary/20"
+                      : "hover:bg-white/8"
+                  } ${checked ? "text-foreground" : "text-white/70"}`}
                 >
                   {/* Checkbox */}
                   <span
