@@ -178,8 +178,8 @@ const MarqueeRow = ({
 }) => {
   const [paused, setPaused] = useState(false);
 
-  // Repeat images enough times so each group is always wider than any viewport
-  const filledImages = [...images, ...images, ...images, ...images, ...images];
+  // Repeat images so each group is always wider than any viewport (3x is enough)
+  const filledImages = [...images, ...images, ...images];
 
   return (
     <div
@@ -209,8 +209,8 @@ const MarqueeRow = ({
                   alt={`Social proof ${i + 1}`}
                   className="h-[15rem] sm:h-[17rem] w-auto rounded-2xl border border-white/10 shadow-xl shadow-black/50 object-cover"
                   draggable={false}
-                  loading="lazy"
                   decoding="async"
+                  fetchPriority="low"
                 />
                 <div className="absolute inset-0 rounded-2xl bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ring-2 ring-primary/40" />
               </motion.div>
