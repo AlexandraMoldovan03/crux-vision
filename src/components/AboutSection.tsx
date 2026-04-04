@@ -58,24 +58,68 @@ const AboutSection = () => {
           <p className="text-xs font-semibold tracking-widest uppercase text-muted-foreground/50 mb-4">
           </p>
 
-          {/* Pills row */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {t.cvPillars.split(",").map((pillar, i, arr) => (
-              <div key={pillar} className="flex items-center gap-3">
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ duration: 0.4, delay: 0.55 + i * 0.08 }}
-                  className="px-4 py-2 rounded-full border border-primary/25 bg-primary/8 text-sm font-semibold text-primary"
-                >
-                  {pillar}
-                </motion.span>
-                {i < arr.length - 1 && (
-                  <Plus size={14} className="text-primary/40 flex-shrink-0" />
-                )}
-              </div>
-            ))}
-          </div>
+          {/* Pills — 2×2 cross grid on mobile, horizontal row on desktop */}
+          {(() => {
+            const pillars = t.cvPillars.split(",");
+            const Pill = ({ label, delay }: { label: string; delay: number }) => (
+              <motion.span
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay }}
+                className="px-4 py-2.5 rounded-full border border-primary/25 bg-primary/8 text-sm font-semibold text-primary text-center whitespace-nowrap"
+              >
+                {label}
+              </motion.span>
+            );
+            const Divider = ({ rotate = false, delay = 0.7 }: { rotate?: boolean; delay?: number }) => (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.3, delay }}
+                className="flex items-center justify-center"
+              >
+                <Plus
+                  size={13}
+                  className={`text-primary/35 flex-shrink-0 ${rotate ? "rotate-0" : ""}`}
+                />
+              </motion.div>
+            );
+            return (
+              <>
+                {/* Mobile: 3×3 cross grid (pill | + | pill / + | · | + / pill | + | pill) */}
+                <div className="sm:hidden grid grid-cols-[1fr_20px_1fr] grid-rows-[auto_20px_auto] items-center justify-items-center gap-x-1 gap-y-0 max-w-[300px] mx-auto">
+                  <Pill label={pillars[0]} delay={0.55} />
+                  <Divider delay={0.60} />
+                  <Pill label={pillars[1]} delay={0.63} />
+
+                  <Divider delay={0.66} />
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={isInView ? { opacity: 1 } : {}}
+                    transition={{ duration: 0.3, delay: 0.68 }}
+                    className="text-primary/20 text-xs font-bold"
+                  >+</motion.span>
+                  <Divider delay={0.70} />
+
+                  <Pill label={pillars[2]} delay={0.73} />
+                  <Divider delay={0.76} />
+                  <Pill label={pillars[3]} delay={0.79} />
+                </div>
+
+                {/* Desktop: horizontal row */}
+                <div className="hidden sm:flex items-center justify-center gap-3">
+                  {pillars.map((pillar, i) => (
+                    <div key={pillar} className="flex items-center gap-3">
+                      <Pill label={pillar} delay={0.55 + i * 0.08} />
+                      {i < pillars.length - 1 && (
+                        <Plus size={14} className="text-primary/40 flex-shrink-0" />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </>
+            );
+          })()}
 
           {/* Tagline */}
           <motion.p

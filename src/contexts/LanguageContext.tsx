@@ -13,9 +13,9 @@ const translations = {
     startProject: "Start a Project",
 
     // Hero
-    heroLine1: "Build Digital Power.",
-    heroLine2: "Shape Vision.",
-    heroLine3: "Dominate Online.",
+    heroLine1: "Build Digital Power",
+    heroLine2: "Shape Vision",
+    heroLine3: "Dominate Online",
     heroDesc: "We build brands that mean business. Websites, apps, social media, paid campaigns, video content, design and events — Crux Vision is your entire digital team, under one roof.",
     viewProjects: "View Projects",
 
@@ -171,9 +171,9 @@ const translations = {
     contact: "Contact",
     startProject: "Începe un Proiect",
 
-    heroLine1: "Construiește Putere Digitală.",
-    heroLine2: "Modelează Viziunea.",
-    heroLine3: "Domină Online.",
+    heroLine1: "Construiește Putere Digitală",
+    heroLine2: "Modelează Viziunea",
+    heroLine3: "Domină Online",
     heroDesc: "Transformăm ideile în site-uri, video-uri și campanii care contează. La Crux Vision, nu facem doar publicitate, ci punem brandurile în mișcare.",
     viewProjects: "Vezi Proiectele",
 

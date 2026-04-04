@@ -4,7 +4,7 @@ import heroBg from "@/assets/hero-bg.png";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const HeroSection = () => {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -32,20 +32,16 @@ const HeroSection = () => {
   </div>
 </motion.div>
 
-        {/* Shark motto */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="flex justify-center mb-5"
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className={`font-display font-black leading-[1.05] tracking-tight mb-6 whitespace-nowrap ${
+            lang === "ro"
+              ? "text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl"
+              : "text-4xl sm:text-5xl md:text-7xl lg:text-8xl"
+          }`}
         >
-          <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm text-xs md:text-sm text-muted-foreground/80 italic tracking-wide font-medium">
-            <span className="text-primary not-italic font-bold text-base leading-none"></span>
-            Be a shark in the internet ocean.
-          </span>
-        </motion.div>
-
-        <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6">
           {t.heroLine1}
           <br />
           <span className="gradient-text">{t.heroLine2}</span>
@@ -65,6 +61,43 @@ const HeroSection = () => {
           <a href="#contact" className="group relative px-8 py-4 rounded-full font-display font-semibold text-foreground glass-card gradient-border hover-glow transition-all duration-500">
             {t.startProject}
           </a>
+        </motion.div>
+
+        {/* Shark motto — registered trademark */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 1.2 }}
+          className="mt-14 flex flex-col items-center gap-3"
+        >
+          <div className="flex items-center gap-4 w-full justify-center">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent via-white/15 to-white/15" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent via-white/15 to-white/15" />
+          </div>
+          <div className="relative inline-flex items-baseline gap-1 select-none">
+            <span
+              className="font-display text-2xl sm:text-3xl md:text-4xl font-black italic tracking-tight"
+              style={{
+                backgroundImage: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--secondary)))",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+                filter: "drop-shadow(0 0 24px hsl(var(--primary) / 0.35))",
+              }}
+            >
+              Be a shark in the internet ocean
+            </span>
+            <sup
+              className="text-[10px] sm:text-xs font-bold not-italic ml-0.5 leading-none"
+              style={{ color: "hsl(var(--primary))", verticalAlign: "super" }}
+              title="Marcă înregistrată"
+            >
+              ®
+            </sup>
+          </div>
+          <p className="text-muted-foreground/40 text-[10px] tracking-[0.2em] uppercase font-medium">
+           Crux Vision
+          </p>
         </motion.div>
       </div>
     </section>
