@@ -14,7 +14,6 @@ const Navbar = () => {
     { label: t.about, href: "#about" },
     { label: t.services, href: "#services" },
     { label: t.projects, href: "#projects" },
-    { label: t.process, href: "#process" },
     { label: t.contact, href: "#contact" },
   ];
 

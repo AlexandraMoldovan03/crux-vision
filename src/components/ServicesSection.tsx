@@ -7,6 +7,7 @@ import {
   Palette,
   Monitor,
   Megaphone,
+  ArrowRight,
   type LucideIcon,
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -19,10 +20,16 @@ interface Category {
   title: string;
   description: string;
   tags: string[];
+  serviceValue: string;
 }
 
 // ─── Category Card ────────────────────────────────────────────────────────────
-const CategoryCard = ({ cat, i }: { cat: Category; i: number }) => {
+const CategoryCard = ({ cat, i, onSelect, ctaLabel }: {
+  cat: Category;
+  i: number;
+  onSelect: (value: string) => void;
+  ctaLabel: string;
+}) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-50px" });
   const Icon = cat.icon;
@@ -34,12 +41,12 @@ const CategoryCard = ({ cat, i }: { cat: Category; i: number }) => {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ type: "spring", stiffness: 75, damping: 18, delay: i * 0.08 }}
       whileHover={{ y: -6, transition: { type: "spring", stiffness: 300, damping: 24 } }}
-      className="group glass-card flex flex-col gap-4 overflow-hidden cursor-default"
+      className="group glass-card flex flex-col overflow-hidden"
     >
       {/* Coloured top accent bar */}
       <div className="h-1 w-full" style={{ background: cat.accentColor }} />
 
-      <div className="px-6 pb-6 flex flex-col gap-4 flex-1">
+      <div className="px-6 pb-6 pt-1 flex flex-col gap-4 flex-1">
         {/* Icon + Title */}
         <div className="flex items-start gap-4 mt-1">
           <div
@@ -53,13 +60,13 @@ const CategoryCard = ({ cat, i }: { cat: Category; i: number }) => {
           </h3>
         </div>
 
-        {/* Description — plain language */}
+        {/* Description */}
         <p className="text-muted-foreground text-sm leading-relaxed">
           {cat.description}
         </p>
 
-        {/* Tags — max 4, simple */}
-        <div className="flex flex-wrap gap-2 mt-auto pt-1">
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2">
           {cat.tags.map((tag) => (
             <span
               key={tag}
@@ -68,6 +75,23 @@ const CategoryCard = ({ cat, i }: { cat: Category; i: number }) => {
               {tag}
             </span>
           ))}
+        </div>
+
+        {/* CTA button */}
+        <div className="mt-auto pt-2">
+          <button
+            onClick={() => onSelect(cat.serviceValue)}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold
+              border border-white/10 bg-white/[0.03] text-muted-foreground
+              hover:border-primary/40 hover:bg-primary/8 hover:text-foreground
+              active:scale-[0.97] transition-all duration-200 group/btn"
+          >
+            <span>{ctaLabel}</span>
+            <ArrowRight
+              size={14}
+              className="transition-transform duration-200 group-hover/btn:translate-x-1"
+            />
+          </button>
         </div>
       </div>
     </motion.div>
@@ -78,8 +102,10 @@ const CategoryCard = ({ cat, i }: { cat: Category; i: number }) => {
 const ServicesSection = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
-  const { t, lang } = useLanguage();
+  const { t, lang, selectService } = useLanguage();
   const ro = lang === "ro";
+
+  const ctaLabel = ro ? "Cere ofertă" : "Get a quote";
 
   const categories: Category[] = [
     {
@@ -88,6 +114,7 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--primary) / 0.15)",
       title: t.svcCat1Title,
       description: t.svcCat1Desc,
+      serviceValue: "marketing",
       tags: ro
         ? ["Reclame Plătite", "Email Marketing", "Campanii Creative", "Consultanță"]
         : ["Paid Advertising", "Email Marketing", "Creative Campaigns", "Consulting"],
@@ -98,6 +125,7 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--secondary) / 0.15)",
       title: t.svcCat2Title,
       description: t.svcCat2Desc,
+      serviceValue: "social-media",
       tags: ro
         ? ["Instagram & TikTok", "Facebook", "Creștere Organică", "Rapoarte Lunare"]
         : ["Instagram & TikTok", "Facebook", "Organic Growth", "Monthly Reports"],
@@ -108,6 +136,7 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--accent) / 0.15)",
       title: t.svcCat3Title,
       description: t.svcCat3Desc,
+      serviceValue: "content",
       tags: ro
         ? ["Fotografii & Video", "Reels & TikToks", "Influencer Marketing", "UGC"]
         : ["Photos & Video", "Reels & TikToks", "Influencer Marketing", "UGC"],
@@ -118,6 +147,7 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--secondary) / 0.15)",
       title: t.svcCat4Title,
       description: t.svcCat4Desc,
+      serviceValue: "design",
       tags: ro
         ? ["Logo & Identitate", "Cărți de Vizită", "Pliante & Meniuri", "Graphic Design"]
         : ["Logo & Identity", "Business Cards", "Flyers & Menus", "Graphic Design"],
@@ -128,9 +158,10 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--primary) / 0.15)",
       title: t.svcCat5Title,
       description: t.svcCat5Desc,
+      serviceValue: "web",
       tags: ro
-        ? ["Site de Prezentare", "Magazin Online", "Aplicație Web", "SEO"]
-        : ["Presentation Website", "Online Store", "Web App", "SEO"],
+        ? ["Site de Prezentare", "Magazin Online", "Landing Page", "SEO"]
+        : ["Presentation Website", "Online Store", "Landing Page", "SEO"],
     },
     {
       icon: Megaphone,
@@ -138,6 +169,7 @@ const ServicesSection = () => {
       iconBg: "hsl(var(--accent) / 0.15)",
       title: t.svcCat6Title,
       description: t.svcCat6Desc,
+      serviceValue: "pr-events",
       tags: ro
         ? ["Organizare Evenimente", "Relații Publice", "Promovare", "Parteneriate"]
         : ["Event Management", "Public Relations", "Promotion", "Partnerships"],
@@ -200,7 +232,7 @@ const ServicesSection = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {categories.map((cat, i) => (
-            <CategoryCard key={cat.title} cat={cat} i={i} />
+            <CategoryCard key={cat.title} cat={cat} i={i} onSelect={selectService} ctaLabel={ctaLabel} />
           ))}
         </div>
       </div>

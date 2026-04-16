@@ -159,6 +159,8 @@ const FooterSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-50px" });
   const { t } = useLanguage();
 
+  const { pendingService, consumePendingService } = useLanguage();
+
   const [name, setName]           = useState("");
   const [company, setCompany]     = useState("");
   const [email, setEmail]         = useState("");
@@ -167,6 +169,19 @@ const FooterSection = () => {
   const [note, setNote]           = useState("");
   const [status, setStatus]       = useState<FormStatus>("idle");
   const [errorMsg, setErrorMsg]   = useState("");
+  const [formHighlight, setFormHighlight] = useState(false);
+
+  // When a service is selected from the Services section, pre-fill the form
+  useEffect(() => {
+    if (pendingService) {
+      const val = consumePendingService();
+      if (val) {
+        setServices((prev) => prev.includes(val) ? prev : [...prev, val]);
+        setFormHighlight(true);
+        setTimeout(() => setFormHighlight(false), 1800);
+      }
+    }
+  }, [pendingService, consumePendingService]);
 
   const FORMSPREE_ID = "xvzwwwlz";
 
@@ -339,7 +354,13 @@ const FooterSection = () => {
               </div>
             ) : (
               /* Form */
-              <form className="glass-card p-7 rounded-2xl flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
+              <form
+                className={`glass-card p-7 rounded-2xl flex flex-col gap-4 transition-all duration-700 ${
+                  formHighlight ? "ring-2 ring-primary/50 shadow-[0_0_40px_-8px_hsl(var(--primary)/0.4)]" : ""
+                }`}
+                onSubmit={handleSubmit}
+                noValidate
+              >
                 {/* Row 1: Name + Company */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input
@@ -387,14 +408,16 @@ const FooterSection = () => {
                   <label className="block text-xs font-medium text-muted-foreground mb-2 ml-1">
                     {t.formServices}
                   </label>
-                  <MultiSelect
-                    options={serviceOptions}
-                    selected={services}
-                    onChange={setServices}
-                    placeholder={t.formServicesPlaceholder}
-                    selectedLabel={t.formServicesSelected}
-                    disabled={isLoading}
-                  />
+                  <div className={`rounded-xl transition-all duration-700 ${formHighlight ? "ring-1 ring-primary/40" : ""}`}>
+                    <MultiSelect
+                      options={serviceOptions}
+                      selected={services}
+                      onChange={setServices}
+                      placeholder={t.formServicesPlaceholder}
+                      selectedLabel={t.formServicesSelected}
+                      disabled={isLoading}
+                    />
+                  </div>
                 </div>
 
                 {/* Row 4: Optional note */}

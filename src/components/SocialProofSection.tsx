@@ -257,7 +257,7 @@ const SocialProofSection = () => {
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative py-16 sm:py-20 md:py-24 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[500px] bg-secondary/6 rounded-full blur-[180px]" />
@@ -266,23 +266,23 @@ const SocialProofSection = () => {
       </div>
 
       {/* Header */}
-      <div className="max-w-6xl mx-auto px-6 relative z-10 mb-14" ref={headerRef}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 mb-10 sm:mb-14 text-center" ref={headerRef}>
         <motion.div
-  initial={{ opacity: 0 }}
-  animate={headerInView ? { opacity: 1 } : {}}
-  transition={{ duration: 0.9, delay: 0.4 }}
-  className="flex flex-col gap-5 relative z-10 w-screen left-1/2 -translate-x-1/2"
->
+          initial={{ opacity: 0 }}
+          animate={headerInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.9, delay: 0.4 }}
+          className="flex flex-col items-center gap-4"
+        >
           <motion.span
             initial={{ opacity: 0, scale: 0.9 }}
             animate={headerInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.5 }}
-            className="inline-block text-xs font-semibold tracking-widest uppercase text-primary mb-5 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/8"
+            className="inline-block text-xs font-semibold tracking-widest uppercase text-primary px-4 py-1.5 rounded-full border border-primary/25 bg-primary/8"
           >
             {t.socialProofLabel}
           </motion.span>
 
-          <h2 className="font-display text-3xl md:text-5xl lg:text-6xl font-bold mb-5">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold">
             {t.socialProofTitle}{" "}
             <span className="gradient-text">{t.socialProofTitleAccent}</span>
           </h2>
@@ -291,7 +291,7 @@ const SocialProofSection = () => {
             initial={{ opacity: 0, y: 16 }}
             animate={headerInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto"
+            className="text-muted-foreground text-base md:text-lg max-w-xl"
           >
             {t.socialProofDesc}
           </motion.p>
@@ -299,7 +299,7 @@ const SocialProofSection = () => {
       </div>
 
       {/* Stat chips */}
-      <div className="max-w-5xl mx-auto px-6 relative z-10 mb-14" ref={statsRef}>
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 mb-10 sm:mb-14" ref={statsRef}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
           {chips.map((chip, i) => (
             <StatChip
@@ -327,12 +327,10 @@ const SocialProofSection = () => {
           { images: row2, reverse: true,  speed: 85 },
         ].map(({ images, reverse, speed }, rowIdx) => (
           <div key={rowIdx} className="relative">
-            {/* Left fade */}
-            {/* <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" /> */}
-            {/* Right fade */}
-            {/* <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" /> */}
-            <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+            {/* Fade stânga — mai lat pe desktop pentru breathing room */}
+            <div className="absolute left-0 top-0 bottom-0 w-10 sm:w-20 md:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+            {/* Fade dreapta */}
+            <div className="absolute right-0 top-0 bottom-0 w-10 sm:w-20 md:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
             <MarqueeRow
               images={images}
               reverse={reverse}

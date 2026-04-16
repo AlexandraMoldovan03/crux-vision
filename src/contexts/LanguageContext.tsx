@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
 type Lang = "en" | "ro";
 
@@ -41,8 +41,8 @@ const translations = {
     svcCat3Desc: "Scroll-stopping photos, videos, reels and ad creatives — all produced in-house, built to perform on every platform where your audience lives.",
     svcCat4Title: "Logo & Design",
     svcCat4Desc: "Your identity, crafted to last. Logo systems, brand guidelines, print collateral — design that earns trust before you even say a word.",
-    svcCat5Title: "Website & Apps",
-    svcCat5Desc: "Fast, scalable, conversion-focused. Brand site, online store or custom web app — we build it right, the first time.",
+    svcCat5Title: "Website & Online Store",
+    svcCat5Desc: "Fast, conversion-focused, built to last. Brand site or online store — designed to impress, optimised for results, delivered right the first time.",
     svcCat6Title: "PR & Events",
     svcCat6Desc: "From press releases to full event production — we put your brand in the spotlight and make sure the right people are talking about it.",
     // keep old keys for backwards compat (not displayed anymore)
@@ -72,8 +72,8 @@ const translations = {
     proj3Title: "DisTim",
     proj3Desc: "Cultural discovery platform for Timișoara — interactive map of literary and artistic landmarks, event listings, and QR-based city exploration for visitors in transit.",
     proj3Tag: "Cultural Platform",
-    proj4Title: "Prof & Coach Anca",
-    proj4Desc: "Personal brand website for educator and life coach Anca Farkas-Rusu — featuring course listings, session booking, an online shop, and a virtual tour experience.",
+    proj4Title: "Presentation Website + Online Store",
+    proj4Desc: "Personal brand website - featuring course listings, session booking, an online shop, and a virtual tour experience.",
     proj4Tag: "Coaching Website",
     viewCaseStudy: "View Case Study",
     featuredBadge: "Featured",
@@ -157,7 +157,7 @@ const translations = {
     svcOpt2: "📣 Marketing & Ads",
     svcOpt3: "🎬 Content & Video",
     svcOpt4: "🎨 Logo & Design",
-    svcOpt5: "🌐 Website or App",
+    svcOpt5: "🌐 Website or Online Store",
     svcOpt6: "📰 PR & Events",
     svcOpt7: "💰 Pricing & Packages",
     svcOpt8: "🤔 Not sure yet — let's talk",
@@ -197,8 +197,8 @@ const translations = {
     svcCat3Desc: "Fotografii, video, reels, reclame vizuale — totul creat de echipa noastră, gândit să oprească scrollul și să facă oamenii să dea click. Nu facem conținut de umplutură.",
     svcCat4Title: "Logo & Design",
     svcCat4Desc: "Logo, ghid de brand, cărți de vizită, pliante, meniuri — tot ce face ca afacerea ta să inspire încredere la prima vedere. Identitate vizuală care se ține minte.",
-    svcCat5Title: "Site Web & Aplicații",
-    svcCat5Desc: "Site de prezentare, magazin online sau aplicație web la comandă — facem ce ai nevoie, cum trebuie, fără scurtături. Rapid, arătos și construit să reziste.",
+    svcCat5Title: "Site Web & Magazin Online",
+    svcCat5Desc: "De la site-uri de prezentare la platforme e-commerce complexe, construim infrastructura digitală care îți transformă vizitatorii în clienți. Performanță fără compromisuri, implementată corect de la primul rând de cod.",
     svcCat6Title: "PR & Evenimente",
     svcCat6Desc: "Organizăm evenimentele tale de la A la Z, scriem comunicatele de presă și ne asigurăm că brandul tău ajunge la oamenii potriviți — în media, pe rețele și în comunitate.",
     // keep old keys for backwards compat (not displayed anymore)
@@ -227,8 +227,8 @@ const translations = {
     proj3Title: "DisTim",
     proj3Desc: "Platformă de descoperire culturală pentru Timișoara — hartă interactivă a reperelor literare și artistice, listing-uri de evenimente și explorare a orașului prin QR pentru vizitatorii în tranzit.",
     proj3Tag: "Platformă Culturală",
-    proj4Title: "Prof & Coach Anca",
-    proj4Desc: "Website de brand personal pentru educatoarea și life coach-ul Anca Farkas-Rusu — cu listing-uri de cursuri, rezervare sesiuni, magazin online și tur virtual.",
+    proj4Title: "Site de prezentare + magazin online",
+    proj4Desc: "Website de brand personal cu listing-uri de cursuri, rezervare sesiuni, magazin online și tur virtual.",
     proj4Tag: "Website Coaching",
     viewCaseStudy: "Vezi Studiul de Caz",
     featuredBadge: "Recomandat",
@@ -309,7 +309,7 @@ const translations = {
     svcOpt2: "📣 Marketing & Reclame",
     svcOpt3: "🎬 Conținut & Video",
     svcOpt4: "🎨 Logo & Design",
-    svcOpt5: "🌐 Site Web sau Aplicație",
+    svcOpt5: "🌐 Site Web sau Magazin Online",
     svcOpt6: "📰 PR & Evenimente",
     svcOpt7: "💰 Bugete & Prețuri",
     svcOpt8: "🤔 Nu știu exact, vreau să discutăm",
@@ -323,18 +323,39 @@ interface LanguageContextType {
   lang: Lang;
   setLang: (lang: Lang) => void;
   t: Translations;
+  pendingService: string | null;
+  selectService: (value: string) => void;
+  consumePendingService: () => string | null;
 }
 
 const LanguageContext = createContext<LanguageContextType>({
   lang: "en",
   setLang: () => {},
   t: translations.en,
+  pendingService: null,
+  selectService: () => {},
+  consumePendingService: () => null,
 });
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLang] = useState<Lang>("en");
+  const [pendingService, setPendingService] = useState<string | null>(null);
+
+  const selectService = useCallback((value: string) => {
+    setPendingService(value);
+    setTimeout(() => {
+      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+    }, 80);
+  }, []);
+
+  const consumePendingService = useCallback(() => {
+    const val = pendingService;
+    setPendingService(null);
+    return val;
+  }, [pendingService]);
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] }}>
+    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang], pendingService, selectService, consumePendingService }}>
       {children}
     </LanguageContext.Provider>
   );
