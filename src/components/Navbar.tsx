@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import sharkLogo from "@/assets/logo1.png";
+import cruxLogo from "@/assets/cruxLogo-transparent.png";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const Navbar = () => {
@@ -60,15 +60,13 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between h-16 lg:h-20">
 
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 lg:gap-3 z-10 shrink-0">
+        <a href="#" className="flex items-center z-10 shrink-0">
           <img
-            src={sharkLogo}
+            src={cruxLogo}
             alt="Crux Vision"
-            className="w-14 h-14 lg:w-20 lg:h-20 object-contain mix-blend-screen"
+            className="h-12 lg:h-16 w-auto object-contain"
+            style={{ filter: "brightness(1.8) saturate(1.1)" }}
           />
-          <span className="font-display font-bold text-base lg:text-xl tracking-tight text-foreground whitespace-nowrap">
-            CRUX <span className="gradient-text">VISION</span>
-          </span>
         </a>
 
         {/* Desktop nav — visible only on lg+ */}

@@ -1,10 +1,231 @@
 <!doctype html>
-<html lang="en">
+<html lang="ro">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>crux-vision-clean</title>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TITLE & META DESCRIPTION — optimizate pentru Alba Iulia + România
+    ═══════════════════════════════════════════════════════════ -->
+    <title>Crux Vision | Agenție Marketing Digital Alba Iulia & România</title>
+    <meta name="description" content="Crux Vision – agenție de marketing digital din Alba Iulia. Servicii: reclame Google & Meta, social media, web design, branding, video, PR și evenimente. Rezultate măsurabile pentru afaceri din Alba Iulia și toată România." />
+    <meta name="keywords" content="agentie marketing digital alba iulia, web design alba iulia, creare site alba iulia, social media management alba iulia, reclame facebook alba iulia, reclame google alba iulia, agentie publicitate alba iulia, branding alba iulia, marketing online romania, agentie digitala alba iulia, crux vision, campanii publicitare alba iulia, seo alba iulia, promovare online alba iulia, agentie marketing romania" />
+    <meta name="author" content="Crux Vision" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://cruxvision.ro/" />
+
+    <!-- Hreflang — site bilingv RO/EN -->
+    <link rel="alternate" hreflang="ro" href="https://cruxvision.ro/" />
+    <link rel="alternate" hreflang="en" href="https://cruxvision.ro/" />
+    <link rel="alternate" hreflang="x-default" href="https://cruxvision.ro/" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="apple-touch-icon" href="/vite.svg" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         OPEN GRAPH — pentru share-uri pe Facebook, WhatsApp, LinkedIn
+    ═══════════════════════════════════════════════════════════ -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Crux Vision" />
+    <meta property="og:title" content="Crux Vision | Agenție Marketing Digital Alba Iulia & România" />
+    <meta property="og:description" content="Reclame, social media, web design, branding, video și PR – totul sub un singur acoperiș. Crux Vision, agenție full-service din Alba Iulia." />
+    <meta property="og:url" content="https://cruxvision.ro/" />
+    <meta property="og:image" content="https://cruxvision.ro/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Crux Vision – Agenție Marketing Digital Alba Iulia" />
+    <meta property="og:locale" content="ro_RO" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TWITTER / X CARD
+    ═══════════════════════════════════════════════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Crux Vision | Agenție Marketing Digital Alba Iulia" />
+    <meta name="twitter:description" content="Reclame, social media, web design, branding, video și PR din Alba Iulia. Rezultate reale, strategie solidă." />
+    <meta name="twitter:image" content="https://cruxvision.ro/og-image.jpg" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         GEO — semnale geografice pentru Alba Iulia
+    ═══════════════════════════════════════════════════════════ -->
+    <meta name="geo.region" content="RO-AB" />
+    <meta name="geo.placename" content="Alba Iulia" />
+    <meta name="geo.position" content="46.0685;23.5753" />
+    <meta name="ICBM" content="46.0685, 23.5753" />
+
+    <!-- ═══════════════════════════════════════════════════════════
+         STRUCTURED DATA — JSON-LD
+         1. LocalBusiness (MarketingAgency) — cel mai important pentru local SEO
+         2. Organization
+         3. WebSite cu SearchAction
+    ═══════════════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": ["LocalBusiness", "MarketingAgency"],
+      "@id": "https://cruxvision.ro/#business",
+      "name": "Crux Vision",
+      "legalName": "Crux Vision Media Network",
+      "description": "Agenție de marketing digital full-service din Alba Iulia. Oferim servicii de reclame plătite, social media management, web design, branding, producție video, PR și organizare evenimente pentru afaceri din Alba Iulia și întreaga Românie.",
+      "url": "https://cruxvision.ro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cruxvision.ro/logo.png",
+        "width": 512,
+        "height": 512
+      },
+      "image": "https://cruxvision.ro/og-image.jpg",
+      "telephone": "+40700000000",
+      "email": "contact@cruxvision.ro",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Alba Iulia",
+        "addressRegion": "Alba",
+        "addressCountry": "RO",
+        "postalCode": "510000"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 46.0685,
+        "longitude": 23.5753
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Alba Iulia"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Județul Alba"
+        },
+        {
+          "@type": "Country",
+          "name": "România"
+        }
+      ],
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
+      "priceRange": "$$",
+      "currenciesAccepted": "RON, EUR",
+      "paymentAccepted": "Cash, Card, Transfer bancar",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Servicii Marketing Digital",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Marketing & Reclame Plătite",
+              "description": "Campanii publicitare pe Google Ads, Meta Ads (Facebook & Instagram) și TikTok Ads pentru afaceri din Alba Iulia și România."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Social Media Management",
+              "description": "Gestionare completă a conturilor de social media: Instagram, Facebook, TikTok. Creștere organică și strategie de conținut."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Web Design & Dezvoltare Site Web",
+              "description": "Creare site-uri de prezentare, magazine online și aplicații web moderne, optimizate SEO, pentru clienți din Alba Iulia și toată România."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Branding & Design Grafic",
+              "description": "Creare logo, identitate vizuală, cărți de vizită, pliante și materiale de promovare pentru branduri din Alba Iulia."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Producție Video & Foto",
+              "description": "Fotografii profesionale, videoclipuri, reels, reclame video pentru platformele sociale și campanii publicitare."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "PR & Organizare Evenimente",
+              "description": "Relații publice, comunicare de brand, organizare evenimente corporate și promoționale în Alba Iulia și județele limitrofe."
+            }
+          }
+        ]
+      },
+      "sameAs": [
+        "https://www.instagram.com/cruxvision",
+        "https://www.facebook.com/cruxvision",
+        "https://www.linkedin.com/company/cruxvision",
+        "https://www.tiktok.com/@cruxvision"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://cruxvision.ro/#organization",
+      "name": "Crux Vision",
+      "url": "https://cruxvision.ro",
+      "logo": "https://cruxvision.ro/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+40700000000",
+        "contactType": "customer service",
+        "availableLanguage": ["Romanian", "English"],
+        "areaServed": "RO"
+      },
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Alba Iulia",
+          "addressCountry": "RO"
+        }
+      },
+      "slogan": "Be a shark in the internet ocean"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://cruxvision.ro/#website",
+      "url": "https://cruxvision.ro",
+      "name": "Crux Vision – Agenție Marketing Digital Alba Iulia",
+      "description": "Agenție full-service de marketing digital din Alba Iulia: reclame, social media, web, branding, video, PR și evenimente.",
+      "inLanguage": ["ro", "en"],
+      "publisher": {
+        "@id": "https://cruxvision.ro/#organization"
+      }
+    }
+    </script>
+
+    <!-- Preconnect pentru performanță -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   </head>
   <body>
     <div id="root"></div>

@@ -77,7 +77,7 @@ const translations = {
     proj4Tag: "Coaching Website",
     viewCaseStudy: "View Case Study",
     featuredBadge: "Featured",
-
+/////
     // Stats
     statsLabel: "Results",
     statsTitle: "Why",
@@ -338,7 +338,7 @@ const LanguageContext = createContext<LanguageContextType>({
 });
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLang] = useState<Lang>("en");
+  const [lang, setLang] = useState<Lang>("ro");
   const [pendingService, setPendingService] = useState<string | null>(null);
 
   const selectService = useCallback((value: string) => {
