@@ -1,6 +1,6 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { Phone, Mail, Clock, ChevronDown, Check } from "lucide-react";
+import { Phone, Mail, Clock, MapPin, ChevronDown, Check, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import sharkLogo from "@/assets/shark-logo.png";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -313,6 +313,24 @@ const FooterSection = () => {
                 label="Program"
                 value={t.contactAvailability}
               />
+              <ContactItem
+                icon={MapPin}
+                label="Adresă"
+                value="Str. George Barițiu, Bl. J5, Ap. 20, Alba Iulia"
+              />
+            </div>
+
+            {/* Social links */}
+            <div className="flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/crux.vision/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10 border border-primary/20 text-primary hover:bg-primary/20 hover:border-primary/40 transition-all duration-300"
+                aria-label="Instagram Crux Vision"
+              >
+                <Instagram size={16} />
+              </a>
             </div>
 
             {/* Response time badge */}

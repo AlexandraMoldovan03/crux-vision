@@ -5,7 +5,7 @@
   <!-- Pagina principală — prioritate maximă -->
   <url>
     <loc>https://cruxvision.ro/</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ro" href="https://cruxvision.ro/" />
@@ -15,7 +15,7 @@
   <!-- Politică de Confidențialitate -->
   <url>
     <loc>https://cruxvision.ro/politica-confidentialitate</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -23,7 +23,7 @@
   <!-- Termeni și Condiții -->
   <url>
     <loc>https://cruxvision.ro/termeni-si-conditii</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
@@ -31,7 +31,7 @@
   <!-- Politică Cookie -->
   <url>
     <loc>https://cruxvision.ro/politica-cookie</loc>
-    <lastmod>2026-04-24</lastmod>
+    <lastmod>2026-05-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
