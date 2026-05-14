@@ -141,7 +141,7 @@ const CookiePolicy = () => {
             <section>
               <h2 className="text-xl font-display font-semibold text-foreground mb-3">7. Contact</h2>
               <p>
-                Pentru orice întrebări legate de utilizarea cookie-urilor pe site-ul nostru, ne puteți contacta la <strong className="text-foreground">contact@cruxvision.ro</strong>.
+                Pentru orice întrebări legate de utilizarea cookie-urilor pe site-ul nostru, ne puteți contacta la <strong className="text-foreground">danicrucita60@gmail.com</strong>.
               </p>
             </section>
 

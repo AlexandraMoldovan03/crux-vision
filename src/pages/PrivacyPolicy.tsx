@@ -36,7 +36,7 @@ const PrivacyPolicy = () => {
               Politică de Confidențialitate
             </h1>
             <p className="text-muted-foreground text-sm">
-              Ultima actualizare: <span className="text-foreground">[DATA ULTIMEI ACTUALIZĂRI]</span>
+              Ultima actualizare: <span className="text-foreground">14.05.2026</span>
             </p>
           </div>
 
@@ -46,12 +46,12 @@ const PrivacyPolicy = () => {
             <section>
               <h2 className="text-xl font-display font-semibold text-foreground mb-3">1. Cine suntem</h2>
               <p>
-                <strong className="text-foreground">[DENUMIRE FIRMĂ]</strong>, cu sediul în <strong className="text-foreground">[ADRESĂ COMPLETĂ]</strong>,
+                <strong className="text-foreground">[DENUMIRE FIRMĂ]</strong>, cu sediul în <strong className="text-foreground">Alba Iulia, Alba, Str. George Baritiu , Bloc J5, Ap.20</strong>,
                 înregistrată cu CUI/CIF <strong className="text-foreground">[CUI]</strong> la Registrul Comerțului sub nr. <strong className="text-foreground">[NR. REG. COM.]</strong>,
                 este operatorul de date cu caracter personal în sensul Regulamentului (UE) 2016/679 (GDPR).
               </p>
               <p className="mt-2">
-                Ne puteți contacta la adresa de e-mail: <strong className="text-foreground">contact@cruxvision.ro</strong> sau telefonic la <strong className="text-foreground">+40 700 000 000</strong>.
+                Ne puteți contacta la adresa de e-mail: <strong className="text-foreground">danicrucita60@gmail.com</strong> sau telefonic la <strong className="text-foreground">+40 733 853 653</strong>.
               </p>
             </section>
 
@@ -101,7 +101,7 @@ const PrivacyPolicy = () => {
                 <li><strong className="text-foreground">Dreptul de opoziție</strong> — vă puteți opune prelucrării bazate pe interesul legitim.</li>
               </ul>
               <p className="mt-3">
-                Pentru exercitarea acestor drepturi, ne puteți contacta la: <strong className="text-foreground">contact@cruxvision.ro</strong>. Vă vom răspunde în termen de maximum 30 de zile.
+                Pentru exercitarea acestor drepturi, ne puteți contacta la: <strong className="text-foreground">danicrucita60@gmail.com</strong>. Vă vom răspunde în termen de maximum 30 de zile.
               </p>
             </section>
 

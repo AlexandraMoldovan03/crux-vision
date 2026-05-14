@@ -36,7 +36,7 @@ const TermsAndConditions = () => {
               Termeni și Condiții
             </h1>
             <p className="text-muted-foreground text-sm">
-              Ultima actualizare: <span className="text-foreground">[DATA ULTIMEI ACTUALIZĂRI]</span>
+              Ultima actualizare: <span className="text-foreground">14.05.2026</span>
             </p>
           </div>
 
@@ -129,9 +129,9 @@ const TermsAndConditions = () => {
                 Pentru orice întrebare referitoare la acești termeni, ne puteți contacta la:
               </p>
               <ul className="mt-3 space-y-1 list-disc list-inside">
-                <li>E-mail: <strong className="text-foreground">contact@cruxvision.ro</strong></li>
-                <li>Telefon: <strong className="text-foreground">+40 700 000 000</strong></li>
-                <li>Adresă: <strong className="text-foreground">[ADRESĂ COMPLETĂ]</strong></li>
+                <li>E-mail: <strong className="text-foreground">danicrucita60@gmail.com</strong></li>
+                <li>Telefon: <strong className="text-foreground">+40 733 853 653</strong></li>
+                <li>Adresă: <strong className="text-foreground">Alba Iulia, Alba, Str. George Baritiu , Bloc J5, Ap.20</strong></li>
               </ul>
             </section>
 

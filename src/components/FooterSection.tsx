@@ -299,14 +299,14 @@ const FooterSection = () => {
               <ContactItem
                 icon={Phone}
                 label={t.contactPhone}
-                value="+40 700 000 000"
-                href="tel:+40700000000"
+                value="+40 733 853 653"
+                href="tel:+40733853653"
               />
               <ContactItem
                 icon={Mail}
                 label={t.contactEmail}
-                value="contact@cruxvision.ro"
-                href="mailto:contact@cruxvision.ro"
+                value="danicrucita60@gmail.com"
+                href="mailto:danicrucita60@gmail.com"
               />
               <ContactItem
                 icon={Clock}
