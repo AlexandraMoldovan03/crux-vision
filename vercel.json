@@ -20,5 +20,8 @@
       "destination": "https://www.crux-vision.com/$1",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
