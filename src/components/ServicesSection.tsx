@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 import { useLanguage } from "../contexts/LanguageContext";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 interface Category {
   icon: LucideIcon;
   accentColor: string;
@@ -23,7 +22,6 @@ interface Category {
   serviceValue: string;
 }
 
-// ─── Category Card ────────────────────────────────────────────────────────────
 const CategoryCard = ({ cat, i, onSelect, ctaLabel }: {
   cat: Category;
   i: number;
@@ -98,7 +96,6 @@ const CategoryCard = ({ cat, i, onSelect, ctaLabel }: {
   );
 };
 
-// ─── Main Section ─────────────────────────────────────────────────────────────
 const ServicesSection = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });

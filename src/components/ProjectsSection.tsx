@@ -96,7 +96,7 @@ const ProjectsSection = () => {
     <section id="projects" className="relative section-padding">
       <div className="max-w-7xl mx-auto">
 
-        {/* ── Section Header ── */}
+        
         <div ref={headerRef}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -119,7 +119,7 @@ const ProjectsSection = () => {
           </motion.div>
         </div>
 
-        {/* ── Featured: TriggerForm ── */}
+        
         <div ref={featuredRef}>
           <motion.div
             initial={{ opacity: 0, y: 70 }}
@@ -230,7 +230,7 @@ const ProjectsSection = () => {
           </motion.div>
         </div>
 
-        {/* ── Web Projects Grid ── */}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {webProjects.map((project, i) => (
             <ProjectCard key={i} project={project} i={i} />

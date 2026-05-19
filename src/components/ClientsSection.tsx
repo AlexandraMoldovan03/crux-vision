@@ -2,7 +2,6 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { useLanguage } from "../contexts/LanguageContext";
 
-// ─── Brand data ───────────────────────────────────────────────────────────────
 const brands = [
   { name: "BSides Transilvania",  category: "Event" },
   { name: "Dacia",                category: "Car Brand" },
@@ -24,7 +23,6 @@ const brands = [
 const row1 = brands.slice(0, 7);
 const row2 = brands.slice(7);
 
-// ─── Single brand pill ────────────────────────────────────────────────────────
 const BrandPill = ({ name, category }: { name: string; category: string }) => (
   <div className="flex-shrink-0 group relative mx-2">
     <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm hover:border-primary/30 hover:bg-primary/[0.06] transition-all duration-300 cursor-default select-none">
@@ -47,7 +45,6 @@ const BrandPill = ({ name, category }: { name: string; category: string }) => (
   </div>
 );
 
-// ─── Marquee strip ────────────────────────────────────────────────────────────
 const MarqueeStrip = ({
   items,
   reverse = false,
@@ -77,7 +74,6 @@ const MarqueeStrip = ({
   );
 };
 
-// ─── Main Section ─────────────────────────────────────────────────────────────
 const ClientsSection = () => {
   const headerRef = useRef(null);
   const headerInView = useInView(headerRef, { once: true, margin: "-80px" });

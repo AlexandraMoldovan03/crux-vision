@@ -7,7 +7,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 
 type FormStatus = "idle" | "loading" | "success" | "error";
 
-// ─── Multi-Select Dropdown ────────────────────────────────────────────────────
 interface MultiSelectProps {
   options: { value: string; label: string; featured?: boolean }[];
   selected: string[];
@@ -28,7 +27,6 @@ const MultiSelect = ({
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
-  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
@@ -124,7 +122,6 @@ const MultiSelect = ({
   );
 };
 
-// ─── Contact Info Item ────────────────────────────────────────────────────────
 const ContactItem = ({
   icon: Icon,
   label,
@@ -153,7 +150,6 @@ const ContactItem = ({
   </div>
 );
 
-// ─── Main Footer ──────────────────────────────────────────────────────────────
 const FooterSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
@@ -171,7 +167,6 @@ const FooterSection = () => {
   const [errorMsg, setErrorMsg]   = useState("");
   const [formHighlight, setFormHighlight] = useState(false);
 
-  // When a service is selected from the Services section, pre-fill the form
   useEffect(() => {
     if (pendingService) {
       const val = consumePendingService();
@@ -185,7 +180,6 @@ const FooterSection = () => {
 
   const FORMSPREE_ID = "xvzwwwlz";
 
-  // Service options — recomputed from translations
   const serviceOptions = [
     { value: "consultation", label: t.svcOpt0, featured: true },
     { value: "social-media",  label: t.svcOpt1 },
@@ -274,7 +268,7 @@ const FooterSection = () => {
         {/* Two-column layout */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16">
 
-          {/* ── Left: Contact info ── */}
+          
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -342,7 +336,7 @@ const FooterSection = () => {
             </div>
           </motion.div>
 
-          {/* ── Right: Form ── */}
+          
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}

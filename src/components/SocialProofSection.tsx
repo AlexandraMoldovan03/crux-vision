@@ -20,7 +20,6 @@ const allImages = [img1, img2, img3, img4, img5, img7, img8, img9, img10, img11,
 const row1 = [img1, img2, img3, img4, img5];
 const row2 = [img7, img8, img9, img10, img11, img12];
 
-// ─── Animated Counter ────────────────────────────────────────────────────────
 const Counter = ({
   target,
   suffix = "",
@@ -51,7 +50,6 @@ const Counter = ({
   );
 };
 
-// ─── Stat Chip ────────────────────────────────────────────────────────────────
 interface StatChipProps {
   value: number;
   prefix?: string;
@@ -79,7 +77,6 @@ const StatChip = ({ value, prefix = "", suffix = "", label, custom, delay, inVie
   </motion.div>
 );
 
-// ─── Lightbox ─────────────────────────────────────────────────────────────────
 const Lightbox = ({
   src,
   index,
@@ -164,7 +161,6 @@ const Lightbox = ({
   );
 };
 
-// ─── Marquee Row ──────────────────────────────────────────────────────────────
 const MarqueeRow = ({
   images,
   reverse = false,
@@ -221,7 +217,6 @@ const MarqueeRow = ({
     </div>
   );
 };
-// ─── Main Section ─────────────────────────────────────────────────────────────
 const SocialProofSection = () => {
   const headerRef = useRef(null);
   const statsRef = useRef(null);
