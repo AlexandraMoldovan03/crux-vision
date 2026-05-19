@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import sharkLogo from "@/assets/cruxLogo.png";
-import heroBg from "@/assets/hero-bg.png";
+import sharkLogo from "@/assets/cruxLogo.webp";
+import heroBg from "@/assets/hero-bg.webp";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const HeroSection = () => {

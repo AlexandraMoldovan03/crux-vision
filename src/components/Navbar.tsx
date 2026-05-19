@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import cruxLogo from "@/assets/cruxLogo-transparent.png";
+import cruxLogo from "@/assets/cruxLogo-transparent.webp";
 import { useLanguage } from "../contexts/LanguageContext";
 
 const Navbar = () => {

@@ -1,6 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import sharkLogo from "@/assets/logo1.png";
+import sharkLogo from "@/assets/logo1.webp";
 
 const CookiePolicy = () => {
   return (

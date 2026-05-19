@@ -2,7 +2,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Phone, Mail, Clock, MapPin, ChevronDown, Check, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
-import sharkLogo from "@/assets/shark-logo.png";
+import sharkLogo from "@/assets/shark-logo.webp";
 import { useLanguage } from "../contexts/LanguageContext";
 
 type FormStatus = "idle" | "loading" | "success" | "error";

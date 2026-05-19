@@ -1,11 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import triggerExercises from "@/assets/triggerform-exercises.png";
-import triggerPain from "@/assets/triggerform-pain.png";
-import triggerNutrition from "@/assets/triggerform-nutrition.png";
-import sunTennis from "@/assets/suntennis-bracket.png";
-import disTim from "@/assets/distim-home.png";
-import profCoach from "@/assets/profcoach-home.png";
+import triggerExercises from "@/assets/triggerform-exercises.webp";
+import triggerPain from "@/assets/triggerform-pain.webp";
+import triggerNutrition from "@/assets/triggerform-nutrition.webp";
+import sunTennis from "@/assets/suntennis-bracket.webp";
+import disTim from "@/assets/distim-home.webp";
+import profCoach from "@/assets/profcoach-home.webp";
 import { useLanguage } from "../contexts/LanguageContext";
 
 type Project = {
