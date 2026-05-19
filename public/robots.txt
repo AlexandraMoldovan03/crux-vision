@@ -1,12 +1,10 @@
 # Crux Vision — robots.txt
-# https://cruxvision.ro
+# https://www.crux-vision.com
 
 User-agent: *
 Allow: /
 
-# Dezactivează indexarea paginilor de eroare și assets interne
-Disallow: /assets/
 Disallow: /*.map$
 
 # Sitemap
-Sitemap: https://cruxvision.ro/sitemap.xml
+Sitemap: https://www.crux-vision.com/sitemap.xml
