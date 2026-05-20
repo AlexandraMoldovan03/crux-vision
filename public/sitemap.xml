@@ -2,36 +2,32 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <!-- Pagina principală — prioritate maximă -->
   <url>
     <loc>https://www.crux-vision.com/</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="ro" href="https://www.crux-vision.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.crux-vision.com/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.crux-vision.com/" />
   </url>
 
-  <!-- Politică de Confidențialitate -->
   <url>
     <loc>https://www.crux-vision.com/politica-confidentialitate</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
-  <!-- Termeni și Condiții -->
   <url>
     <loc>https://www.crux-vision.com/termeni-si-conditii</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
-  <!-- Politică Cookie -->
   <url>
     <loc>https://www.crux-vision.com/politica-cookie</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
