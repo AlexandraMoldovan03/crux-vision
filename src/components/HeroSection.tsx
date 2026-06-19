@@ -22,6 +22,7 @@ const HeroSection = () => {
 >
   <div className="relative flex items-center justify-center">
     <div className="absolute inset-0 rounded-full bg-primary/20 blur-3xl scale-125" />
+    <div className="absolute inset-0 rounded-full bg-background/40 blur-xl scale-75 md:bg-background/15" />
     <img
       src={sharkLogo}
       alt="Crux Vision"

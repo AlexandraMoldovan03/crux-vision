@@ -178,8 +178,6 @@ const FooterSection = () => {
     }
   }, [pendingService, consumePendingService]);
 
-  const FORMSPREE_ID = "xvzwwwlz";
-
   const serviceOptions = [
     { value: "consultation", label: t.svcOpt0, featured: true },
     { value: "social-media",  label: t.svcOpt1 },
@@ -204,9 +202,9 @@ const FooterSection = () => {
     );
 
     try {
-      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const res = await fetch("/api/contact", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name,
           company: company || "—",
@@ -223,7 +221,7 @@ const FooterSection = () => {
         setName(""); setCompany(""); setEmail("");
         setPhone(""); setServices([]); setNote("");
       } else {
-        setErrorMsg(data?.errors?.[0]?.message || t.errorDesc);
+        setErrorMsg(data?.error || t.errorDesc);
         setStatus("error");
       }
     } catch {
