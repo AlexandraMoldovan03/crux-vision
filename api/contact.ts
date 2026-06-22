@@ -4,7 +4,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const BUSINESS_EMAIL = "danicrucita60@gmail.com";
-const FROM_ADDRESS = "Crux Vision <noreply@crux-vision.com>";
+const FROM_ADDRESS = "Crux Vision <onboarding@resend.dev>";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", "*");
